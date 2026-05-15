@@ -1,0 +1,6097 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>主題課程學習表</title>
+<meta name="description" content="幼兒園週主題課程學習表 — 線上製作、即時預覽、輸出 PDF / 圖片。">
+<meta property="og:title" content="主題課程學習表">
+<meta property="og:description" content="幼兒園週主題課程學習表 — 線上製作、即時預覽、輸出 PDF / 圖片。">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="主題課程學習表">
+<meta name="twitter:description" content="幼兒園週主題課程學習表 — 線上製作、即時預覽、輸出 PDF / 圖片。">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Noto+Sans+TC:wght@200;300;400;500;700&family=Noto+Serif+TC:wght@200;300;400;500;600;700&family=Inter:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Caveat:wght@400;500&family=Klee+One:wght@400;600&family=Huninn&family=LXGW+WenKai+TC&family=Zen+Old+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+:root {
+  /* 雅緻調色盤:象牙白、墨黑、金線 */
+  --bg: #F5F2EB;
+  --bg-2: #EFEAE0;
+  --paper: #FBFAF6;
+  --paper-edge: #E8E2D2;
+  --ink: #1A1A1A;
+  --ink-soft: #4A453C;
+  --ink-faint: #8B8478;
+  --line: #D8D2C0;
+  --line-soft: #EDE7D8;
+  --gold: #B08D3F;
+  --gold-soft: #D4B870;
+  --accent: #2D3E36;
+  --accent-soft: #6B7A6F;
+  --shadow: 0 1px 3px rgba(26,26,26,0.04), 0 8px 24px rgba(26,26,26,0.06);
+  --shadow-sm: 0 1px 2px rgba(26,26,26,0.03), 0 2px 8px rgba(26,26,26,0.04);
+
+  /* 字型變數(預設:典雅古韻) */
+  --font-display: 'Noto Serif TC', serif;     /* 標題用 */
+  --font-body: 'Noto Sans TC', sans-serif;    /* 內文用 */
+  --font-en: 'Cormorant Garamond', serif;     /* 英文點綴 */
+  --display-weight: 600;                       /* 標題粗細 */
+  --body-weight: 300;                          /* 內文粗細 */
+  --en-style: italic;                          /* 英文是否斜體 */
+}
+
+/* 字型主題 1:典雅古韻(預設) - 思源宋體 */
+.theme-elegant {
+  --font-display: 'Noto Serif TC', serif;
+  --font-body: 'Noto Sans TC', sans-serif;
+  --font-en: 'Cormorant Garamond', serif;
+  --display-weight: 600;
+  --body-weight: 300;
+  --en-style: italic;
+}
+
+/* 字型主題 2:現代極簡 - 思源黑體 */
+.theme-modern {
+  --font-display: 'Noto Sans TC', sans-serif;
+  --font-body: 'Noto Sans TC', sans-serif;
+  --font-en: 'Inter', sans-serif;
+  --display-weight: 500;
+  --body-weight: 300;
+  --en-style: normal;
+}
+
+/* 字型主題 3:文楷古韻 - 霞鶩文楷 */
+.theme-wenkai {
+  --font-display: 'LXGW WenKai TC', serif;
+  --font-body: 'LXGW WenKai TC', serif;
+  --font-en: 'EB Garamond', serif;
+  --display-weight: 400;
+  --body-weight: 400;
+  --en-style: italic;
+}
+
+/* 字型主題 4:粉圓溫度 - Huninn */
+.theme-huninn {
+  --font-display: 'Huninn', sans-serif;
+  --font-body: 'Huninn', sans-serif;
+  --font-en: 'Caveat', cursive;
+  --display-weight: 400;
+  --body-weight: 400;
+  --en-style: normal;
+}
+
+/* 字型主題 5:日系明朝 - Zen Old Mincho */
+.theme-mincho {
+  --font-display: 'Zen Old Mincho', 'Noto Serif TC', serif;
+  --font-body: 'Zen Old Mincho', 'Noto Serif TC', serif;
+  --font-en: 'Cormorant Garamond', serif;
+  --display-weight: 700;
+  --body-weight: 400;
+  --en-style: italic;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 300;
+  background: var(--bg);
+  min-height: 100vh;
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========== 頁首 ========== */
+.site-header {
+  background: white;
+  padding: 18px 32px 0;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+/* 頁面切換 Tab */
+.page-tabs-wrap {
+  max-width: 1500px;
+  margin: 16px auto 0;
+  padding-bottom: 0;
+}
+.page-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid var(--line);
+}
+.page-tab {
+  font-family: inherit;
+  font-size: 14.5px;
+  letter-spacing: 2px;
+  padding: 12px 28px;
+  background: transparent;
+  border: none;
+  color: var(--ink-faint);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.18s;
+  position: relative;
+}
+.page-tab .pt-icon { font-size: 17px; }
+.page-tab:hover {
+  color: var(--ink-soft);
+  background: rgba(195, 162, 100, 0.04);
+}
+.page-tab.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+  font-weight: 600;
+}
+.page-tab.active:hover { background: transparent; }
+@media (max-width: 768px) {
+  .page-tabs-wrap { margin-top: 10px; }
+  .page-tab {
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+  }
+}
+.site-header .inner {
+  max-width: 1500px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.brand-mark {
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid var(--ink);
+  display: grid;
+  place-items: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -1px;
+}
+.brand h1 {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 500;
+  font-size: 19px;
+  letter-spacing: 3px;
+  color: var(--ink);
+}
+.brand p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-faint);
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+.brand-actions {
+  display: flex;
+  gap: 6px;
+  margin-left: 12px;
+  padding-left: 14px;
+  border-left: 1px solid var(--line);
+}
+.brand-btn {
+  padding: 6px 10px;
+  font-size: 11.5px;
+  letter-spacing: 0.5px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+}
+.brand-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.actions {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.action-group {
+  display: flex;
+  gap: 4px;
+  padding: 0 8px;
+  border-right: 1px solid var(--line);
+}
+.action-group:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+.action-group:first-child {
+  padding-left: 0;
+}
+.action-group button {
+  padding: 8px 14px;
+  font-size: 12.5px;
+  letter-spacing: 1px;
+}
+.action-group.output-group button {
+  padding: 8px 18px;
+}
+
+button {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  padding: 9px 22px;
+  border: 1px solid var(--line);
+  background: white;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+button:hover { border-color: var(--ink); }
+
+.btn-primary {
+  background: var(--ink);
+  color: white;
+  border-color: var(--ink);
+  padding: 9px 24px;
+}
+.btn-primary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--ink);
+}
+
+/* 手機提示條 */
+.mobile-hint {
+  display: none;
+  background: #FFF6E8;
+  border-bottom: 1px solid #E8C99A;
+  padding: 8px 14px;
+  font-size: 12px;
+  color: #8B5A28;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.3px;
+  line-height: 1.5;
+}
+.mobile-hint b { color: #6B4520; font-weight: 700; }
+.mobile-hint.show { display: flex; }
+.mobile-hint .mh-icon { flex-shrink: 0; font-size: 14px; }
+.mobile-hint .mh-text { flex: 1; }
+.mobile-hint .mh-close {
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  color: #8B5A28;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+/* ========== 主體佈局 ========== */
+.layout {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 24px 24px 40px;
+}
+.view {
+  display: none;
+}
+.view.active {
+  display: block;
+}
+/* 編輯頁:editor 容器負責寬度限制(見 .editor 規則),內部 section 不另設 */
+
+/* 預覽頁:整頁顯示,預覽紙自動置中且最大化 */
+#view-preview {
+  display: none;
+}
+#view-preview.active {
+  display: block;
+}
+#view-preview .preview-wrap {
+  width: 100%;
+  max-width: none;
+  position: static;
+}
+#view-preview .preview-frame {
+  border: none;
+  background: transparent;
+}
+#view-preview .preview-toolbar {
+  display: none;  /* 整頁時不需要預覽工具列 */
+}
+#view-preview .preview-scroll {
+  overflow: visible;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+#view-preview #preview-container {
+  /* transform 仍由 JS 控制(autoFitZoom) */
+  transform-origin: top center;
+}
+/* 預覽頁:預覽紙置中、不需要 75% 縮放 */
+#view-preview {
+  display: none;  /* 預設不顯示 */
+}
+#view-preview.active {
+  display: flex;
+  justify-content: center;
+}
+#view-preview .preview-wrap {
+  width: auto;
+  max-width: none;
+}
+
+/* ========== 手機版 RWD ========== */
+@media (max-width: 768px) {
+  body { font-size: 14px; }
+
+  .layout {
+    padding: 12px 10px 30px;
+    gap: 14px;
+  }
+
+  /* 頁首 */
+  .site-header {
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .brand {
+    gap: 10px;
+  }
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+  .brand h1 { font-size: 16px; letter-spacing: 2px; }
+  .brand p { font-size: 11px; letter-spacing: 0.5px; }
+  .brand-actions {
+    margin-left: auto;
+    padding-left: 8px;
+  }
+  .brand-btn { font-size: 11px; padding: 5px 8px; }
+
+  /* 頂部工具列改成可橫向滑動 */
+  .actions {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+    margin: 0 -10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    scrollbar-width: thin;
+  }
+  .action-group {
+    padding: 0 4px;
+    flex-shrink: 0;
+    border-right-width: 0;
+  }
+  .action-group:not(:last-child)::after {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 24px;
+    background: var(--line);
+    margin: 0 4px;
+  }
+  .action-group button {
+    font-size: 12px;
+    padding: 8px 10px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .action-group.output-group button {
+    padding: 8px 12px;
+  }
+
+  /* 編輯區 / 預覽區 各佔滿寬度,堆疊 */
+  .editor-header { padding: 12px 14px; }
+  .editor-header h2 { font-size: 13px; }
+  .editor-header .hint { font-size: 10.5px; }
+  .editor-body { padding: 12px 14px; }
+
+  .section { margin-bottom: 18px; }
+  .section-label {
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+
+  /* 字型卡片變小 */
+  .font-picker {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+  }
+  .font-card {
+    padding: 8px 4px;
+  }
+  .font-card .main {
+    font-size: 18px !important;
+  }
+  .font-card .name {
+    font-size: 9px;
+  }
+  .font-card .en {
+    font-size: 9px;
+  }
+
+  /* 顯示選項 toggle 在手機上換成直排 */
+  .toggle-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .toggle-row[style*="margin-top"] {
+    flex-direction: row;
+  }
+  .toggle-item { padding: 4px 0; }
+  .layout-tabs button { padding: 7px 4px; font-size: 11px; }
+
+  /* 基本資訊 grid 改 1 欄 */
+  .field-grid { grid-template-columns: 1fr; gap: 10px; }
+  .field label { font-size: 11px; }
+  .field input, .field select {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  /* Logo 上傳區 */
+  .logo-upload-row {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px;
+  }
+  .logo-preview { width: 64px; height: 64px; }
+
+  /* 日期模式 tabs */
+  .date-mode-tabs button { padding: 8px 6px; font-size: 11px; }
+
+  /* 課程卡 */
+  .course-card { padding: 12px; }
+  .card-head { gap: 6px; flex-wrap: wrap; }
+  .title-input {
+    min-width: 100%;
+    margin-bottom: 6px;
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+  .body-input {
+    padding: 10px;
+    font-size: 14px;
+    min-height: 80px;
+  }
+  .en-row .en-label { font-size: 9px; padding: 3px 5px; }
+  .en-row .en-input { padding: 5px 8px; font-size: 12px; }
+
+  /* 警告框 */
+  .line-warning { font-size: 12px; }
+  .line-warning .warn-header { padding: 7px 10px; }
+  .line-warning .warn-body { padding: 7px 10px 9px; }
+
+  /* === 預覽區: 紙張自動縮放 === */
+  .preview-area {
+    padding: 16px 8px;
+  }
+  .preview-header h2 { font-size: 13px; }
+  .preview-header .hint { display: none; }
+  .zoom-controls { gap: 4px; }
+  .zoom-controls button { width: 28px; height: 28px; font-size: 12px; }
+  .zoom-controls .level { font-size: 11px; min-width: 38px; }
+
+  /* 預覽紙在手機上自動以視窗寬度為準縮放 */
+  #preview-container {
+    width: 100%;
+    overflow: hidden;
+  }
+  .elegant-paper {
+    transform-origin: top left;
+    /* 預設手機縮放比例 0.45 (794px → ~360px),適合大多數手機 */
+  }
+
+  /* Modal */
+  .modal-card {
+    max-width: 100%;
+    max-height: 92vh;
+    margin: 0 8px;
+  }
+  .modal-head { padding: 12px 16px; }
+  .modal-head h3 { font-size: 13px; letter-spacing: 2px; }
+  .modal-body { padding: 14px 16px; }
+
+  /* 教學 modal */
+  .help-quick { padding: 16px 14px; }
+  .quick-steps { flex-direction: column; gap: 6px; }
+  .quick-step { padding: 14px 12px; }
+  .quick-icon { font-size: 24px; }
+  .quick-text { font-size: 12px; }
+  .quick-text b { font-size: 13px; }
+  .quick-arrow {
+    transform: rotate(90deg);
+    margin: 0 auto;
+    font-size: 18px;
+  }
+  .quick-tip { font-size: 12px; padding: 7px 10px; gap: 6px; }
+}
+
+/* 非常小的手機(380px 以下) */
+@media (max-width: 380px) {
+  body { font-size: 13px; }
+  .brand h1 { font-size: 14px; letter-spacing: 1.5px; }
+  .layout { padding: 10px 8px 24px; }
+  .action-group button { font-size: 11px; padding: 7px 8px; }
+}
+
+/* ========== 編輯區(完全不滾動,跟著頁面一起滾) ========== */
+.editor {
+  background: white;
+  border: 1px solid var(--line);
+  max-width: 1100px;
+  margin: 0 auto;
+  /* 不設 max-height、不要 overflow,跟頁面一起 scroll */
+}
+.editor-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--paper);
+}
+.editor-header h2 {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 3px;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.editor-header h2::before {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--gold);
+}
+.editor-header .hint {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-faint);
+  letter-spacing: 0.5px;
+}
+.editor-body {
+  padding: 18px 20px;
+}
+
+/* ========== 區段 ========== */
+.section { margin-bottom: 18px; }
+.section:last-child { margin-bottom: 0; }
+.section-label {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+}
+.section-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+.section-label .en {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  text-transform: none;
+}
+
+/* ========== 欄位 ========== */
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.field-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field.full { grid-column: 1 / -1; }
+.field label {
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  font-family: 'Inter', 'Noto Sans TC';
+}
+
+.field input,
+.field textarea,
+.field select {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  background: white;
+  color: var(--ink);
+  transition: border-color 0.15s;
+  border-radius: 0;
+}
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+.field textarea {
+  min-height: 50px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* 日期欄位區塊 - 兩欄寬度 */
+.date-fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.date-fields-grid .span-2 { grid-column: 1 / -1; }
+
+/* 日期模式切換 */
+.mode-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-bottom: 8px;
+  border: 1px solid var(--line);
+}
+.mode-tabs button {
+  padding: 7px 4px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  background: white;
+  color: var(--ink-soft);
+  border: none;
+  border-right: 1px solid var(--line);
+  font-weight: 400;
+}
+.mode-tabs button:last-child { border-right: none; }
+.mode-tabs button.active {
+  background: var(--ink);
+  color: white;
+}
+
+/* ========== 課程欄位卡 ========== */
+.course-list { display: flex; flex-direction: column; gap: 14px; }
+
+/* ===== 列容器:把多張卡片包成一列(Row-based 設計) ===== */
+.course-row {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  padding: 8px;
+  position: relative;
+  transition: box-shadow 0.15s, opacity 0.15s, transform 0.15s;
+}
+.course-row.locked-row {
+  background: linear-gradient(to right, rgba(195, 162, 100, 0.04), transparent 60%);
+  border-color: rgba(195, 162, 100, 0.4);
+}
+.course-row.dragging-row {
+  opacity: 0.4;
+}
+.course-row-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 0 4px;
+  min-height: 26px;
+}
+.row-drag-handle {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  cursor: grab;
+  color: var(--ink-faint);
+  opacity: 0.4;
+  border-radius: 3px;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.row-drag-handle:hover {
+  opacity: 1;
+  background: rgba(195, 162, 100, 0.1);
+}
+.row-drag-handle:active { cursor: grabbing; }
+.row-drag-handle svg {
+  width: 12px;
+  height: 12px;
+  display: block;
+}
+.row-label {
+  font-size: 11.5px;
+  color: var(--ink-faint);
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+.row-label .row-num {
+  display: inline-block;
+  min-width: 18px;
+  height: 18px;
+  line-height: 18px;
+  text-align: center;
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  background: rgba(195, 162, 100, 0.15);
+  border-radius: 50%;
+  margin-right: 4px;
+}
+.row-width-picker {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--paper);
+  margin-left: auto;
+}
+.row-width-picker .w-opt {
+  font-family: inherit;
+  font-size: 11.5px;
+  letter-spacing: 0.5px;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: none;
+  border-right: 1px solid var(--line);
+  padding: 4px 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.row-width-picker .w-opt:last-child { border-right: none; }
+.row-width-picker .w-opt:hover { background: rgba(195, 162, 100, 0.08); }
+.row-width-picker .w-opt.active {
+  background: var(--gold);
+  color: white;
+}
+.row-width-picker .w-icon {
+  display: inline-flex;
+  gap: 1.5px;
+  align-items: center;
+}
+.row-width-picker .w-icon span {
+  display: inline-block;
+  height: 8px;
+  background: currentColor;
+  opacity: 0.55;
+  border-radius: 1px;
+}
+.row-width-picker .w-opt.active .w-icon span { opacity: 0.9; }
+.row-width-picker .w-icon .f { width: 18px; }
+.row-width-picker .w-icon .h { width: 8px; }
+.row-width-picker .w-icon .t { width: 5px; }
+.row-delete {
+  width: 22px;
+  height: 22px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink-faint);
+  cursor: pointer;
+  padding: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  opacity: 0.4;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.row-delete:hover {
+  color: #B33;
+  border-color: #B33;
+  background: rgba(179, 51, 51, 0.08);
+  opacity: 1;
+}
+.row-delete svg {
+  width: 11px;
+  height: 11px;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+/* 列內容:多個 cell 並排,根據寬度切版 */
+.row-cells {
+  display: grid;
+  gap: 8px;
+  position: relative;
+}
+/* 關鍵:防止 grid item 被內容撐開超出容器寬度 */
+.row-cells > .course-card {
+  min-width: 0;
+}
+/* 兩格/三格之間的交換鈕(浮在 gap 上,垂直置中) */
+.cell-swap-mid {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--gold);
+  background: white;
+  color: var(--gold);
+  cursor: pointer;
+  padding: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  z-index: 10;
+  transition: all 0.18s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  opacity: 0.7;
+}
+.cell-swap-mid svg { width: 16px; height: 16px; display: block; }
+.cell-swap-mid:hover {
+  opacity: 1;
+  background: var(--gold);
+  color: white;
+  transform: translate(-50%, -50%) scale(1.12);
+}
+.cell-swap-mid:active {
+  transform: translate(-50%, -50%) scale(0.95);
+}
+.row-cells[data-w="full"] { grid-template-columns: 1fr; }
+.row-cells[data-w="half"] { grid-template-columns: 1fr 1fr; }
+.row-cells[data-w="third"] { grid-template-columns: 1fr 1fr 1fr; }
+/* 列間插入指示線 */
+.row-drop-indicator {
+  height: 0;
+  border-top: 3px solid var(--gold);
+  margin: -2px 0;
+  pointer-events: none;
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(195, 162, 100, 0.5);
+}
+/* 底部新增列按鈕列 */
+.add-row-bar {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.add-row-btn {
+  flex: 1;
+  font-family: inherit;
+  font-size: 13px;
+  background: var(--paper);
+  border: 1px dashed var(--line);
+  color: var(--ink-soft);
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s;
+}
+.add-row-btn:hover {
+  background: rgba(195, 162, 100, 0.06);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.add-row-icon {
+  display: inline-flex;
+  gap: 2px;
+  align-items: center;
+}
+.add-row-icon .bar {
+  display: inline-block;
+  height: 10px;
+  background: currentColor;
+  opacity: 0.55;
+  border-radius: 1px;
+}
+.add-row-icon .f { width: 26px; }
+.add-row-icon .h { width: 12px; }
+.add-row-icon .t { width: 7.5px; }
+@media (max-width: 480px) {
+  .row-width-picker .w-opt {
+    padding: 4px 7px;
+  }
+  .row-width-picker .w-opt span:last-child {
+    display: none; /* 手機只顯示圖示 */
+  }
+}
+
+.course-card {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  padding: 10px 12px;
+  transition: box-shadow 0.15s, border-color 0.15s, opacity 0.15s;
+  position: relative;
+}
+.course-card.locked {
+  background: linear-gradient(to right, rgba(195, 162, 100, 0.05), transparent 40%);
+  border-left: 3px solid var(--gold);
+  cursor: default;
+}
+/* 卡片內右上角的刪除按鈕(小、淡,hover 才明顯) */
+.card-delete {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  color: var(--ink-faint);
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  padding: 0;
+  border-radius: 50%;
+  transition: all 0.15s;
+  z-index: 5;
+  opacity: 0.35;
+  display: grid;
+  place-items: center;
+}
+/* 刪除按鈕:平常隱藏,hover 卡片時於右上角浮現 */
+.card-delete-inline {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-faint);
+  cursor: pointer;
+  padding: 0;
+  border-radius: 50%;
+  transition: all 0.18s ease;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.card-delete-inline svg {
+  width: 10px;
+  height: 10px;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  display: block;
+}
+.course-card:hover .card-delete-inline {
+  opacity: 1;
+  pointer-events: auto;
+}
+.card-delete-inline:hover {
+  color: #B33;
+  border-color: #B33;
+  background: #fff;
+  transform: scale(1.08);
+}
+.card-delete-placeholder {
+  display: none;
+}
+
+.course-card:hover .card-delete {
+  opacity: 0.7;
+}
+.card-delete:hover {
+  color: #B33;
+  background: rgba(179, 51, 51, 0.12);
+  opacity: 1 !important;
+}
+/* 編輯區卡片左側的拖曳把手 */
+.card-drag-handle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 22px;
+  display: grid;
+  place-items: center;
+  cursor: grab;
+  color: var(--ink-faint);
+  user-select: none;
+  opacity: 0.35;
+  transition: opacity 0.15s, background 0.15s;
+  border-right: 1px dashed transparent;
+}
+.card-drag-handle:hover {
+  opacity: 1;
+  background: rgba(195, 162, 100, 0.08);
+  border-right-color: var(--line);
+}
+.card-drag-handle:active {
+  cursor: grabbing;
+}
+.card-drag-handle svg {
+  width: 12px;
+  height: 12px;
+  display: block;
+}
+.course-card.has-drag {
+  padding-left: 30px;
+}
+/* 編輯區卡片被拖曳時 */
+.course-card.dragging-edit {
+  opacity: 0.35;
+}
+/* 編輯區卡片之間的插入線 */
+.drop-indicator {
+  height: 0;
+  border-top: 2px solid var(--gold);
+  margin: -1px 0;
+  pointer-events: none;
+  position: relative;
+  z-index: 10;
+  border-radius: 1px;
+  box-shadow: 0 0 4px rgba(195, 162, 100, 0.4);
+}
+.drag-handle {
+  display: inline-block;
+  width: 18px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--ink-faint);
+  cursor: default;
+  user-select: none;
+  letter-spacing: -2px;
+  font-weight: bold;
+  line-height: 1;
+}
+/* 編號徽章:顯示此欄位在預覽紙上的位置順序 */
+.card-index {
+  display: inline-block;
+  min-width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--ink-soft);
+  background: rgba(195, 162, 100, 0.12);
+  border: 1px solid rgba(195, 162, 100, 0.3);
+  border-radius: 50%;
+  user-select: none;
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+.lock-icon {
+  display: inline-block;
+  width: 18px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--gold);
+  user-select: none;
+}
+.course-card.locked input.title-input.readonly {
+  color: var(--gold);
+  font-weight: 600;
+  border-bottom-color: transparent;
+  cursor: default;
+}
+.course-tip {
+  font-size: 11.5px;
+  color: var(--ink-faint);
+  letter-spacing: 0.3px;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  background: rgba(195, 162, 100, 0.06);
+  border-left: 2px solid var(--gold);
+  line-height: 1.6;
+}
+.course-card .card-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.course-card input.title-input {
+  flex: 1;
+  font-family: 'Noto Serif TC';
+  font-weight: 500;
+  font-size: 13.5px;
+  letter-spacing: 2px;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  padding: 4px 2px;
+  color: var(--ink);
+}
+.course-card input.title-input:focus {
+  outline: none;
+  border-bottom-color: var(--ink);
+}
+.icon-btn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  font-size: 13px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  display: grid;
+  place-items: center;
+  letter-spacing: 0;
+}
+.icon-btn:hover:not(:disabled) { border-color: var(--ink); color: var(--ink); }
+.icon-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.icon-btn.danger:hover { border-color: #B33; color: #B33; }
+.icon-btn.photo-on {
+  background: var(--ink);
+  color: white;
+  border-color: var(--ink);
+  font-size: 11px;
+}
+/* 寬度選擇器(兩格 / 三格 / 整行) */
+.width-picker {
+  display: inline-flex;
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.width-picker .width-opt {
+  border: none;
+  background: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: var(--ink-soft);
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  border-right: 1px solid var(--line);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.width-picker .width-opt:last-child {
+  border-right: none;
+}
+.width-picker .width-opt:hover {
+  background: rgba(195, 162, 100, 0.1);
+  color: var(--ink);
+}
+.width-picker .width-opt.active {
+  background: var(--gold);
+  color: white;
+}
+.icon-btn.triple-on {
+  background: var(--gold);
+  color: white;
+  border-color: var(--gold);
+  font-weight: bold;
+}
+
+/* Logo 上傳區 */
+.logo-upload-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  margin-bottom: 12px;
+}
+.logo-preview {
+  width: 56px;
+  height: 56px;
+  border: 1px dashed var(--line);
+  background: white;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.logo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.logo-placeholder {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--ink-faint);
+}
+.logo-actions {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.optional-tag {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 1px 6px;
+  background: var(--paper);
+  color: var(--ink-faint);
+  font-size: 9.5px;
+  letter-spacing: 1px;
+  border: 1px solid var(--line);
+  font-weight: 400;
+}
+
+.logo-btn {
+  padding: 6px 12px;
+  font-size: 11.5px;
+  letter-spacing: 0.5px;
+  background: white;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  cursor: pointer;
+  align-self: flex-start;
+}
+.logo-btn:hover { border-color: var(--ink); }
+.logo-btn-remove {
+  color: #B33;
+  border-color: #E8C5C5;
+}
+.logo-hint {
+  font-size: 10.5px;
+  color: var(--ink-faint);
+  letter-spacing: 0.3px;
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+/* 預覽紙頂部:Logo + 學校名稱橫向排版 */
+.school-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+.school-line .paper-logo-inline {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.school-line .paper-logo-inline img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.school-line .ornament {
+  width: 32px;
+  height: 1px;
+  background: var(--ink);
+  flex-shrink: 0;
+}
+.school-line .school-name {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 30px;
+  letter-spacing: 6px;
+  color: var(--ink);
+  text-indent: 6px;
+}
+
+/* 舊的絕對定位 logo (保留以防舊版資料) */
+.paper-logo {
+  display: none;
+}
+
+/* 顯示選項 toggle */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.toggle-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 12.5px;
+  color: var(--ink);
+  letter-spacing: 0.5px;
+}
+.toggle-item input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+.layout-label {
+  font-size: 11.5px;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.layout-tabs {
+  display: flex;
+  border: 1px solid var(--line);
+  flex: 1;
+}
+.layout-tabs button {
+  flex: 1;
+  padding: 5px 4px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  background: white;
+  color: var(--ink-soft);
+  border: none;
+  border-right: 1px solid var(--line);
+  font-weight: 400;
+  cursor: pointer;
+}
+.layout-tabs button:last-child { border-right: none; }
+.layout-tabs button.active {
+  background: var(--ink);
+  color: white;
+}
+
+.layout-hint {
+  font-size: 10.5px;
+  color: var(--ink-faint);
+  letter-spacing: 0.3px;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+/* 課程卡片的長句警告(顯眼版) */
+.course-card.has-warning {
+  border: 2px solid #E89060;
+  box-shadow: 0 0 0 1px rgba(232,144,96,0.15);
+}
+.course-card textarea.body-input.is-warning {
+  border-color: #E89060;
+  background: #FFFAF4;
+}
+
+.line-warning {
+  margin-top: 10px;
+  padding: 0;
+  background: #FFF1E2;
+  border: 1.5px solid #E89060;
+  border-radius: 3px;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+}
+.line-warning .warn-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #E89060;
+  color: white;
+  font-weight: 600;
+}
+.line-warning .warn-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.line-warning .warn-title {
+  font-size: 12.5px;
+}
+.line-warning .warn-title b {
+  font-weight: 700;
+  color: white;
+  background: rgba(0,0,0,0.18);
+  padding: 1px 6px;
+  border-radius: 2px;
+  margin: 0 2px;
+}
+.line-warning .warn-body {
+  padding: 8px 12px 10px;
+  color: #6B4A28;
+}
+.line-warning .warn-body b {
+  background: #FFE0BD;
+  color: #8B5A28;
+  padding: 1px 5px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+.line-warning ul {
+  margin: 4px 0 0 18px;
+  padding: 0;
+}
+.line-warning ul li {
+  margin-bottom: 2px;
+}
+
+/* 課程卡片內的英文副標輸入 */
+.en-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.en-row .en-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+  background: var(--paper);
+  padding: 3px 6px;
+  border: 1px solid var(--line-soft);
+  flex-shrink: 0;
+}
+.en-row .en-input {
+  flex: 1;
+  font-family: 'Cormorant Garamond', 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 12.5px;
+  letter-spacing: 0.5px;
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  background: white;
+  color: var(--ink-soft);
+}
+.en-row .en-input:focus {
+  outline: none;
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.en-row .en-input::placeholder {
+  color: var(--ink-faint);
+  opacity: 0.6;
+}
+.en-row .en-reset {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  font-size: 13px;
+  border: 1px solid var(--line);
+  background: white;
+  color: var(--gold);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.en-row .en-reset:hover { border-color: var(--gold); }
+
+/* 課程卡片內的照片預覽 */
+.course-photo-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  margin-bottom: 6px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  overflow: hidden;
+}
+.course-photo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  transition: object-position 0.2s;
+}
+.photo-controls {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  right: 4px;
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  pointer-events: none;
+}
+.photo-controls > * { pointer-events: auto; }
+.focus-tabs {
+  display: flex;
+  background: rgba(26,26,26,0.85);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.focus-tabs button {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  font-size: 12px;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  letter-spacing: 0;
+  border-right: 1px solid rgba(255,255,255,0.15);
+}
+.focus-tabs button:last-child { border-right: none; }
+.focus-tabs button:hover { color: white; background: rgba(255,255,255,0.1); }
+.focus-tabs button.active {
+  color: white;
+  background: var(--gold);
+}
+.course-photo-remove {
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  padding: 5px 9px;
+  background: rgba(26,26,26,0.85);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.course-photo-remove:hover { background: rgba(26,26,26,1); }
+
+textarea.body-input {
+  width: 100%;
+  font-family: 'Noto Sans TC';
+  font-weight: 300;
+  font-size: 12.5px;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  background: white;
+  resize: vertical;
+  min-height: 50px;
+  line-height: 1.55;
+  color: var(--ink);
+  /* 讓 textarea 自動長高,不要切掉內容 */
+  overflow: hidden;
+}
+textarea.body-input:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+
+.add-card-btn {
+  width: 100%;
+  padding: 9px;
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px dashed var(--line);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 2.5px;
+  margin-top: 6px;
+}
+.add-card-btn:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+  border-style: solid;
+}
+
+/* ========== 照片上傳 ========== */
+.photo-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.photo-toggle input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+.photo-toggle label {
+  font-size: 12.5px;
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.photo-section { display: none; }
+.photo-section.show { display: block; }
+
+.photo-uploader {
+  border: 1px dashed var(--line);
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--paper);
+}
+.photo-uploader:hover {
+  border-color: var(--ink);
+  border-style: solid;
+}
+.photo-uploader.dragover {
+  border-color: var(--ink);
+  background: var(--bg-2);
+}
+.photo-uploader .icon {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.photo-uploader .text {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  letter-spacing: 1.5px;
+}
+
+.photo-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 8px;
+}
+.photo-thumb {
+  position: relative;
+  aspect-ratio: 1;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.photo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.photo-thumb .remove {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 18px;
+  height: 18px;
+  background: rgba(26,26,26,0.85);
+  color: white;
+  border: none;
+  font-size: 11px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  letter-spacing: 0;
+}
+
+/* ========== 預覽 ========== */
+.preview-wrap {
+  position: sticky;
+  top: 95px;
+}
+.preview-frame {
+  background: white;
+  border: 1px solid var(--line);
+}
+.preview-toolbar {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.preview-toolbar h2 {
+  font-family: 'Noto Serif TC';
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.preview-toolbar h2::before {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--gold);
+}
+.preview-toolbar .zoom {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Cormorant Garamond';
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.preview-toolbar .zoom button {
+  padding: 3px 9px;
+  font-size: 12px;
+  letter-spacing: 0;
+  border: 1px solid var(--line);
+}
+
+.preview-scroll {
+  background: var(--bg-2);
+  padding: 28px;
+  max-height: calc(100vh - 200px);
+  overflow: auto;
+}
+#preview-container {
+  transform-origin: top center;
+  transition: transform 0.2s;
+  margin: 0 auto;
+  width: 794px;
+}
+
+/* =============================================================
+   雅緻紙張本體 — 設計重點
+   ============================================================= */
+.elegant-paper {
+  position: relative;
+  width: 794px;
+  min-height: 1123px;
+  background: var(--paper);
+  background-image:
+    radial-gradient(circle at 0% 0%, rgba(176,141,63,0.025) 0%, transparent 40%),
+    radial-gradient(circle at 100% 100%, rgba(45,62,54,0.02) 0%, transparent 40%);
+  font-family: var(--font-body);
+  color: var(--ink);
+  padding: 36px 40px 28px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--paper-edge);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 頁面四個角落的金色細線裝飾 */
+.elegant-paper::before {
+  content: "";
+  position: absolute;
+  top: 18px; left: 18px; right: 18px; bottom: 18px;
+  border: 0.5px solid rgba(176,141,63,0.3);
+  pointer-events: none;
+}
+
+/* ===== 標題區 ===== */
+.doc-header {
+  text-align: center;
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  position: relative;
+}
+.doc-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.subtitle-en {
+  font-family: var(--font-en);
+  font-style: var(--en-style);
+  font-weight: 300;
+  font-size: 15px;
+  letter-spacing: 4.5px;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.academic-line {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: 4px;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+  text-indent: 4px;
+}
+
+.doc-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: 5px;
+  color: var(--ink);
+  text-indent: 5px;
+}
+
+/* ===== 主題與基本資訊區 ===== */
+.theme-zone {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-bottom: 12px;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 4px 0;
+}
+
+.theme-main {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+}
+.theme-main .theme-label {
+  font-family: var(--font-en);
+  font-style: var(--en-style);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: var(--gold);
+}
+.theme-main .theme-text {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 26px;
+  letter-spacing: 6px;
+  color: var(--ink);
+  text-indent: 6px;
+}
+/* 本週特別提醒區(頁尾上方) */
+.special-note-zone {
+  margin-top: 20px;
+  margin-bottom: 12px;
+  padding: 14px 18px;
+  background: #FFF8EC;
+  border: 1px solid #E8C99A;
+  border-left: 3px solid var(--gold);
+  border-radius: 2px;
+}
+.special-note-zone .special-note-label {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  margin-bottom: 5px;
+}
+.special-note-zone .special-note-text {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 14.5px;
+  color: #6B4419;
+  letter-spacing: 0.3px;
+  line-height: 1.7;
+}
+.special-note-zone .special-note-icon {
+  display: inline-block;
+  margin-right: 6px;
+  font-size: 13px;
+  vertical-align: baseline;
+}
+.special-note-zone .special-note-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 6px 24px;
+}
+.special-note-zone .special-note-list li {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 14.5px;
+  color: #6B4419;
+  letter-spacing: 0.3px;
+  line-height: 1.6;
+  padding-left: 0;
+}
+
+.meta-side {
+  width: 250px;
+  border-left: 1px solid var(--line);
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+}
+.meta-row {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.meta-row .label {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: 3px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.meta-row .value {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  font-size: 15.5px;
+}
+.meta-row .date-sep {
+  display: inline-block;
+  color: var(--gold);
+  font-weight: 500;
+  margin: 0 2px;
+}
+
+/* ===== 主表格 ===== */
+.course-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  background: white;
+}
+.course-table tr {
+  border-top: 1px solid var(--line);
+}
+.course-table tr:last-child {
+  border-bottom: 1px solid var(--ink);
+}
+.course-table tr:first-child {
+  border-top: 1px solid var(--ink);
+}
+.course-table td {
+  padding: 9px 16px;
+  vertical-align: top;
+  position: relative;
+}
+.course-table .label-cell {
+  width: 130px;
+  text-align: center;
+  vertical-align: middle;
+  border-right: 1px solid var(--line);
+  background: var(--paper);
+  padding: 14px 16px;
+}
+.course-table .label-cell .label-text {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 23px;
+  letter-spacing: 4px;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 5px;
+  text-indent: 4px;
+}
+.course-table .label-cell .label-en {
+  font-family: var(--font-en);
+  font-style: var(--en-style);
+  font-weight: 300;
+  font-size: 16px;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+  display: block;
+}
+.course-table .body-cell {
+  font-family: var(--font-body);
+  font-weight: var(--body-weight);
+  font-size: 22px;
+  line-height: 1.95;
+  color: var(--ink);
+  white-space: pre-wrap;
+  word-break: normal;
+  overflow-wrap: break-word;
+  line-break: strict;
+  hanging-punctuation: allow-end;
+}
+.course-table .body-cell.has-photo {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 14px;
+  align-items: center;
+  white-space: normal;
+}
+.course-table .body-cell.has-photo .body-text {
+  white-space: pre-wrap;
+}
+.course-table .body-cell:not(.has-photo) .body-text {
+  display: block;
+}
+.course-table .row-photo {
+  width: 130px;
+  aspect-ratio: 4/3;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  overflow: hidden;
+}
+.course-table .row-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+.course-table .body-cell.empty {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+/* ===== 雙欄版面(欄位多時用) ===== */
+.two-col-grid {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.two-col-grid .grid-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--line);
+  align-items: stretch;
+}
+/* 新版:用 6 單位 grid 支援 ½(3 單位)、⅓(2 單位)、整行(6 單位)混搭 */
+.two-col-grid .grid-row.units-row {
+  grid-template-columns: repeat(6, 1fr);
+}
+.two-col-grid .grid-row:first-child {
+  border-top: none;
+}
+.two-col-grid .grid-cell {
+  padding: 10px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.two-col-grid .grid-cell:first-child {
+  border-right: 1px solid var(--line);
+}
+/* units-row 模式下:除了最後一格之外,所有格都加右邊框 */
+.two-col-grid .grid-row.units-row .grid-cell {
+  border-right: 1px solid var(--line);
+}
+.two-col-grid .grid-row.units-row .grid-cell:last-child {
+  border-right: none;
+}
+/* 預覽紙上的格子:可拖曳的視覺提示 */
+.two-col-grid .grid-cell.cell-draggable {
+  cursor: grab;
+  transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+.two-col-grid .grid-cell.cell-draggable:hover {
+  background: rgba(195, 162, 100, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(195, 162, 100, 0.3);
+}
+.two-col-grid .grid-cell.cell-draggable:active {
+  cursor: grabbing;
+}
+.two-col-grid .grid-cell.cell-dragging {
+  opacity: 0.35;
+}
+.two-col-grid .grid-cell.cell-drop-target {
+  background: rgba(195, 162, 100, 0.12);
+  box-shadow: inset 0 0 0 2px var(--gold);
+}
+.two-col-grid .grid-cell.cell-locked {
+  cursor: default;
+}
+/* 單欄 table row:可拖曳 */
+.course-table tr.row-draggable {
+  cursor: grab;
+  transition: background 0.15s;
+}
+.course-table tr.row-draggable:hover {
+  background: rgba(195, 162, 100, 0.04);
+}
+.course-table tr.row-draggable:active {
+  cursor: grabbing;
+}
+.course-table tr.cell-dragging {
+  opacity: 0.35;
+}
+.course-table tr.cell-drop-target td {
+  background: rgba(195, 162, 100, 0.12);
+  box-shadow: inset 0 2px 0 var(--gold);
+}
+.course-table tr.row-locked {
+  cursor: default;
+}
+/* 三格並排版面:字級調小;不重設 grid-template-columns,由 units-row 控制 */
+.two-col-grid .grid-row.triple-row .grid-cell {
+  border-right: 1px solid var(--line);
+  padding: 14px 12px;
+}
+.two-col-grid .grid-row.triple-row .grid-cell:last-child {
+  border-right: none;
+}
+.two-col-grid .grid-row.triple-row .col-body {
+  font-size: 20px;
+  line-height: 1.75;
+}
+.two-col-grid .grid-row.triple-row .col-title .label-text {
+  font-size: 17.5px;
+}
+.two-col-grid .grid-row.triple-row .col-title .label-en {
+  font-size: 12.5px;
+}
+/* 三格時格寬較窄,標題改垂直排 + 置中(視覺更平衡) */
+.two-col-grid .grid-row.triple-row .col-title {
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+}
+.two-col-grid .grid-row.triple-row .col-body {
+  text-align: left;
+  padding: 0 10%;
+}
+/* 奇數最後一格:跨滿整行,內容置中(視覺上像收尾) */
+.two-col-grid .grid-row.solo-row {
+  /* grid-template-columns 由 units-row 控制(1 個 cell span 6) */
+}
+.two-col-grid .grid-row.solo-row .grid-cell.solo-cell {
+  border-right: none;
+  padding: 14px 18px;
+  align-items: center;
+}
+.two-col-grid .grid-row.solo-row .grid-cell.solo-cell .col-title {
+  justify-content: center;
+  border-bottom-color: transparent;
+  display: inline-flex;
+  min-width: 200px;
+  padding-bottom: 4px;
+  position: relative;
+}
+.two-col-grid .grid-row.solo-row .grid-cell.solo-cell .col-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  border-bottom: 0.5px dashed var(--line);
+}
+.two-col-grid .grid-row.solo-row .grid-cell.solo-cell .col-body {
+  text-align: left;
+  width: auto;
+  padding: 0;
+  align-self: center;
+  display: inline-block;
+  max-width: 60%;
+}
+.two-col-grid .col-title {
+  margin-bottom: 5px;
+  padding-bottom: 4px;
+  border-bottom: 0.5px dashed var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1px;
+  width: 100%;
+}
+.two-col-grid .col-title .label-text {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 19.5px;
+  letter-spacing: 3px;
+  color: var(--ink);
+  text-indent: 3px;
+}
+.two-col-grid .col-title .label-en {
+  font-family: var(--font-en);
+  font-style: var(--en-style);
+  font-weight: 300;
+  font-size: 14.5px;
+  letter-spacing: 1.2px;
+  color: var(--gold);
+}
+.two-col-grid .col-body {
+  font-family: var(--font-body);
+  font-weight: var(--body-weight);
+  font-size: 18.5px;
+  line-height: 1.7;
+  color: var(--ink);
+  white-space: pre-wrap;
+  flex: 1;
+  word-break: normal;
+  overflow-wrap: break-word;
+  line-break: strict;
+  hanging-punctuation: allow-end;
+  text-align: left;
+  width: 100%;
+  padding: 0 18%;
+  box-sizing: border-box;
+}
+.two-col-grid .col-body.empty {
+  color: var(--ink-faint);
+  font-style: italic;
+  font-size: 11px;
+}
+.two-col-grid .row-photo-col {
+  width: 65%;
+  max-width: 200px;
+  aspect-ratio: 4/3;
+  margin: 0 auto 8px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  overflow: hidden;
+}
+.two-col-grid .row-photo-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===== 照片區(可選) ===== */
+.photo-zone {
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+.photo-zone-title {
+  text-align: center;
+  margin-bottom: 14px;
+}
+.photo-zone-title .en {
+  font-family: var(--font-en);
+  font-style: var(--en-style);
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 2px;
+}
+.photo-zone-title .zh {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 5px;
+  color: var(--ink-soft);
+  text-indent: 5px;
+}
+.photo-grid {
+  display: grid;
+  gap: 8px;
+}
+.photo-grid.n1 { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+.photo-grid.n2 { grid-template-columns: 1fr 1fr; }
+.photo-grid.n3 { grid-template-columns: 1fr 1fr 1fr; }
+.photo-grid.n1 .photo-cell { aspect-ratio: 16/9; }
+.photo-grid.n2 .photo-cell,
+.photo-grid.n3 .photo-cell { aspect-ratio: 4/3; }
+
+.photo-cell {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.photo-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===== 頁尾 ===== */
+.doc-footer {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 0.5px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-en);
+  font-style: var(--en-style);
+  font-size: 11.5px;
+  color: var(--ink-faint);
+  letter-spacing: 1.5px;
+}
+.doc-footer .ornament {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.doc-footer .ornament .dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.doc-footer .ornament .dot.outer { background: transparent; border: 1px solid var(--gold); }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--ink);
+  color: white;
+  padding: 12px 28px;
+  font-size: 12.5px;
+  letter-spacing: 2px;
+  font-weight: 400;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transition: all 0.3s;
+  z-index: 1000;
+  pointer-events: none;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.toast.error { background: #8B2424; }
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26,26,26,0.4);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.show { display: flex; }
+.modal-card {
+  background: white;
+  border: 1px solid var(--line);
+  width: 100%;
+  max-width: 480px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+.modal-card.modal-large {
+  max-width: 640px;
+  max-height: 88vh;
+}
+.modal-head {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-head h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 3px;
+}
+.modal-close {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  font-size: 14px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+}
+.modal-body {
+  padding: 18px 20px;
+  overflow-y: auto;
+}
+.modal-hint {
+  font-size: 11.5px;
+  color: var(--ink-faint);
+  line-height: 1.6;
+  margin-bottom: 14px;
+  letter-spacing: 0.5px;
+  padding: 8px 10px;
+  background: var(--paper);
+  border-left: 2px solid var(--gold);
+}
+.history-item {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.history-item:hover {
+  border-color: var(--ink);
+  background: var(--paper);
+}
+.history-item .h-title {
+  font-family: 'Noto Serif TC';
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+.history-item .h-meta {
+  font-size: 11.5px;
+  color: var(--ink-faint);
+  display: flex;
+  gap: 12px;
+}
+.history-item .h-courses {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+}
+.history-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--ink-faint);
+  font-style: italic;
+  font-family: 'Cormorant Garamond';
+  font-size: 14px;
+}
+
+/* 直覺式快速教學 */
+.help-quick {
+  padding: 22px 24px 22px;
+}
+
+/* 教學:開場一句 */
+.help-intro {
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink-soft);
+  letter-spacing: 0.5px;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+/* 教學:5 步驟 */
+.help-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 18px;
+  border: 1px solid var(--line);
+}
+.hs-row {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  align-items: stretch;
+  background: white;
+}
+.hs-row + .hs-row {
+  border-top: 1px solid var(--line);
+}
+.hs-num {
+  background: var(--paper);
+  display: grid;
+  place-items: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--gold);
+  border-right: 1px solid var(--line);
+}
+.hs-text {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.hs-text b {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: var(--ink);
+}
+.hs-text p {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+}
+.hs-text p b {
+  font-size: inherit;
+  letter-spacing: 0;
+  color: #C57240;
+  background: #FFE0BD;
+  padding: 0 4px;
+  border-radius: 2px;
+  font-weight: 700;
+}
+
+/* 教學:重要警告(一行精簡版) */
+.help-note {
+  background: #FFF1E2;
+  border-left: 3px solid #E89060;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: #6B4A28;
+  margin-bottom: 18px;
+  letter-spacing: 0.3px;
+}
+.help-note b {
+  color: #8B5A28;
+  font-weight: 700;
+}
+.help-note u {
+  text-decoration-color: #E89060;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 2px;
+  font-weight: 600;
+}
+
+/* 教學:常用小撇步 */
+.help-tricks h4 {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+  text-indent: 3px;
+}
+.trick {
+  padding: 7px 12px;
+  background: var(--paper);
+  border-left: 2px solid var(--line);
+  font-size: 12.5px;
+  line-height: 1.6;
+  margin-bottom: 4px;
+  letter-spacing: 0.3px;
+  color: var(--ink);
+}
+.trick b {
+  font-weight: 600;
+  color: var(--ink);
+}
+.trick + .trick { /* 同樣設定 */ }
+.quick-steps {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.quick-step {
+  flex: 1;
+  padding: 18px 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+.quick-icon {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--gold);
+  line-height: 1;
+}
+.quick-text {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.quick-text b {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--ink);
+  letter-spacing: 1px;
+}
+.quick-arrow {
+  align-self: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+@media (max-width: 600px) {
+  .quick-steps { flex-direction: column; }
+  .quick-arrow { transform: rotate(90deg); }
+}
+
+.quick-tips {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--line);
+}
+.quick-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--paper);
+  border-left: 2px solid var(--gold);
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--ink);
+  letter-spacing: 0.3px;
+}
+.quick-tip .tip-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.quick-tip b {
+  font-weight: 600;
+  color: var(--ink);
+}
+.help-footer {
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--ink-faint);
+  font-style: italic;
+  margin-top: 16px;
+  letter-spacing: 0.5px;
+}
+
+/* 使用教學(舊版,保留以防用到) */
+.help-section {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed var(--line);
+}
+.help-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+.help-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 28px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  line-height: 1;
+}
+.help-content h4 {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.help-content p {
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.75;
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+}
+.help-content p:last-child { margin-bottom: 0; }
+.help-content ul {
+  margin: 6px 0;
+  padding-left: 20px;
+}
+.help-content li {
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.85;
+  letter-spacing: 0.3px;
+}
+.help-content b {
+  font-weight: 600;
+  color: var(--ink);
+}
+.help-tip {
+  background: var(--paper);
+  border-left: 2px solid var(--gold);
+  padding: 8px 12px;
+  font-size: 12px !important;
+  color: var(--ink-soft) !important;
+  margin-top: 8px !important;
+}
+
+/* 更新項目 */
+.changelog-entry {
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed var(--line);
+}
+.changelog-entry:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+.changelog-date {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--ink);
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+  display: inline-block;
+}
+.changelog-tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  background: var(--gold);
+  color: white;
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+.changelog-list {
+  margin-top: 10px;
+  padding-left: 18px;
+  list-style-type: '— ';
+}
+.changelog-list li {
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.85;
+  letter-spacing: 0.3px;
+  margin-bottom: 4px;
+}
+.changelog-list b {
+  font-weight: 600;
+  color: var(--ink);
+}
+.tip {
+  background: var(--paper);
+  border-left: 2px solid var(--gold);
+  padding: 8px 12px;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+}
+
+/* 字型選擇器 */
+.font-picker {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.font-card {
+  border: 1px solid var(--line);
+  background: white;
+  padding: 8px 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+}
+.font-card:hover {
+  border-color: var(--ink-soft);
+  background: var(--paper);
+}
+.font-card.active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: white;
+}
+.font-card .preview {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  margin-bottom: 2px;
+  color: inherit;
+  display: block;
+  line-height: 1.1;
+}
+.font-card .preview-en {
+  font-size: 9px;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  color: var(--gold);
+  display: block;
+}
+.font-card.active .preview-en { color: var(--gold-soft); }
+.font-card .name {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+}
+.font-card.active .name { color: white; }
+
+.font-card.f-elegant .preview { font-family: 'Noto Serif TC'; font-weight: 600; }
+.font-card.f-elegant .preview-en { font-family: 'Cormorant Garamond'; }
+.font-card.f-modern .preview { font-family: 'Noto Sans TC'; font-weight: 500; }
+.font-card.f-modern .preview-en { font-family: 'Inter'; font-style: normal; }
+.font-card.f-wenkai .preview { font-family: 'LXGW WenKai TC'; font-weight: 400; }
+.font-card.f-wenkai .preview-en { font-family: 'EB Garamond'; }
+.font-card.f-huninn .preview { font-family: 'Huninn'; font-weight: 400; }
+.font-card.f-huninn .preview-en { font-family: 'Caveat'; font-style: normal; }
+.font-card.f-mincho .preview { font-family: 'Zen Old Mincho'; font-weight: 700; }
+.font-card.f-mincho .preview-en { font-family: 'Cormorant Garamond'; }
+
+</style>
+</head>
+<body>
+
+<!-- 手機提示條(只在小螢幕顯示) -->
+<div class="mobile-hint" id="mobileHint">
+  <span class="mh-icon">💡</span>
+  <span class="mh-text">手機適合查看 & 微調。完整編輯建議用<b>電腦</b>會更順手</span>
+  <button class="mh-close" onclick="dismissMobileHint()">✕</button>
+</div>
+
+<header class="site-header">
+  <div class="inner">
+    <div class="brand">
+      <div class="brand-mark">A</div>
+      <div>
+        <h1>主題課程學習表</h1>
+        <p>Weekly Curriculum Composer</p>
+      </div>
+      <div class="brand-actions">
+        <button class="brand-btn" onclick="openHelp()" title="使用教學">❓ 使用教學</button>
+        <button class="brand-btn" onclick="openChangelog()" title="更新項目">📌 更新項目</button>
+      </div>
+    </div>
+    <div class="actions">
+      <div class="action-group">
+        <button onclick="loadSample('classic')" title="套用標準範本(九個常用課程欄位 + 教育部官方英文翻譯)">📋 範本</button>
+        <button onclick="importTemplate()" title="從 JSON 檔載入之前的內容(下載 PDF 時自動存的那個檔)">📥 匯入舊檔</button>
+        <button onclick="clearAll()" title="全部清空重來">🗑 清空</button>
+      </div>
+      <!-- 下載按鈕群:只在預覽頁顯示 -->
+      <div class="action-group output-group" id="outputGroup" style="display:none;">
+        <button class="btn-outline" onclick="copyImage()" title="複製高清圖到剪貼簿,可貼到 LINE / Word(LINE 傳時請選「原圖」)">📲 複製圖片到 LINE</button>
+        <button class="btn-outline" onclick="printPreview()" title="呼叫瀏覽器列印">🖨 列印</button>
+        <button class="btn-outline" onclick="downloadPNG()">下載圖片</button>
+        <button class="btn-primary" onclick="downloadPDF()" title="下載 PDF(給家長看)+ 同時下載原稿(以後可匯入修改)">下載 PDF</button>
+      </div>
+    </div>
+  </div>
+  <!-- 頁面切換 Tabs -->
+  <div class="page-tabs-wrap">
+    <div class="page-tabs">
+      <button class="page-tab active" data-view="edit" onclick="switchView('edit')">
+        <span class="pt-icon">✏️</span>
+        <span class="pt-label">編輯內容</span>
+      </button>
+      <button class="page-tab" data-view="preview" onclick="switchView('preview')">
+        <span class="pt-icon">👁</span>
+        <span class="pt-label">預覽 / 下載</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- ===== 編輯頁 ===== -->
+  <div class="view active" id="view-edit">
+  <div class="editor">
+    <div class="editor-header">
+      <h2>EDIT</h2>
+      <span class="hint">edit · preview · export</span>
+    </div>
+    <div class="editor-body">
+
+      <!-- 字型風格 -->
+      <div class="section">
+        <div class="section-label">字型風格 <span class="en">— Typography</span></div>
+        <div class="font-picker" id="fontPicker">
+          <div class="font-card f-elegant active" data-theme="elegant">
+            <span class="preview">雅</span>
+            <span class="preview-en">Serif</span>
+            <span class="name">典雅宋體</span>
+          </div>
+          <div class="font-card f-modern" data-theme="modern">
+            <span class="preview">簡</span>
+            <span class="preview-en">Modern</span>
+            <span class="name">現代黑體</span>
+          </div>
+          <div class="font-card f-wenkai" data-theme="wenkai">
+            <span class="preview">韻</span>
+            <span class="preview-en">Brush</span>
+            <span class="name">霞鶩文楷</span>
+          </div>
+          <div class="font-card f-huninn" data-theme="huninn">
+            <span class="preview">圓</span>
+            <span class="preview-en">Cute</span>
+            <span class="name">粉圓可愛</span>
+          </div>
+          <div class="font-card f-mincho" data-theme="mincho">
+            <span class="preview">和</span>
+            <span class="preview-en">Wabi</span>
+            <span class="name">日系明朝</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 顯示選項 -->
+      <div class="section">
+        <div class="section-label">顯示選項 <span class="en">— Display</span></div>
+        <div class="toggle-row">
+          <label class="toggle-item">
+            <input type="checkbox" id="showEnToggle" checked>
+            <span>顯示英文副標</span>
+          </label>
+          <label class="toggle-item">
+            <input type="checkbox" id="showAcademicToggle" checked>
+            <span>顯示學年度學期</span>
+          </label>
+        </div>
+        <div class="toggle-row" style="margin-top:8px">
+          <span class="layout-label">版面配置</span>
+          <div class="layout-tabs" id="layoutTabs">
+            <button data-mode="auto" class="active">自動</button>
+            <button data-mode="single">直排</button>
+            <button data-mode="two-column">雙欄</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 表頭 -->
+      <div class="section">
+        <div class="section-label">基本資訊 <span class="en">— Basics</span></div>
+
+        <div class="logo-upload-row">
+          <div class="logo-preview" id="logoPreview">
+            <span class="logo-placeholder">LOGO</span>
+          </div>
+          <div class="logo-actions">
+            <button class="logo-btn" onclick="document.getElementById('logoInput').click()">上傳園所 Logo <span class="optional-tag">可選</span></button>
+            <button class="logo-btn logo-btn-remove" id="logoRemoveBtn" onclick="removeLogo()" style="display:none">移除 Logo</button>
+            <p class="logo-hint">不上傳也沒關係,僅在文件左上角顯示</p>
+          </div>
+          <input type="file" id="logoInput" accept="image/*" style="display:none">
+        </div>
+
+        <div class="field-grid" style="margin-bottom: 8px">
+          <div class="field">
+            <label>School 學校</label>
+            <input type="text" id="school" value="南投縣私立小太陽幼兒園">
+          </div>
+          <div class="field">
+            <label>Class 班級</label>
+            <input type="text" id="className" value="碧海藍天">
+          </div>
+        </div>
+        <div class="field-grid">
+          <div class="field">
+            <label>學年度</label>
+            <input type="text" id="schoolYear" value="114" placeholder="例:114">
+          </div>
+          <div class="field">
+            <label>學期</label>
+            <select id="semester">
+              <option value="第一學期">第一學期</option>
+              <option value="第二學期" selected>第二學期</option>
+              <option value="">不顯示</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 主題與日期 -->
+      <div class="section">
+        <div class="section-label">本週主題 <span class="en">— Theme</span></div>
+        <div class="field full" style="margin-bottom:8px">
+          <label>Theme</label>
+          <input type="text" id="theme" placeholder="例:走進繪本世界">
+        </div>
+
+        <div class="mode-tabs" id="dateModeTabs">
+          <button data-mode="weekly" class="active">單週</button>
+          <button data-mode="biweekly">雙週</button>
+          <button data-mode="custom">自訂</button>
+          <button data-mode="none">不顯示</button>
+        </div>
+
+        <div id="dateFields"></div>
+
+        <div class="field full" style="margin-top:10px">
+          <label>本週特別提醒 <span class="optional-tag">可選 · 顯示於頁尾</span></label>
+          <textarea id="specialNote" rows="4" placeholder="多個事項請按 Enter 換行,例如:&#10;2/8 春節彈性放假&#10;2/12 校外教學請穿運動服"></textarea>
+        </div>
+      </div>
+
+      <!-- 課程欄位 -->
+      <div class="section">
+        <div class="section-label">課程內容 <span class="en">— Curriculum</span></div>
+        <div class="course-list" id="courseList"></div>
+        <div class="add-row-bar">
+          <button class="add-row-btn" onclick="addRow('full')" title="加一列佔整行(1 格)">
+            <span class="add-row-icon"><span class="bar f"></span></span>
+            <span>整行</span>
+          </button>
+          <button class="add-row-btn" onclick="addRow('half')" title="加一列分兩格">
+            <span class="add-row-icon"><span class="bar h"></span><span class="bar h"></span></span>
+            <span>兩格</span>
+          </button>
+          <button class="add-row-btn" onclick="addRow('third')" title="加一列分三格">
+            <span class="add-row-icon"><span class="bar t"></span><span class="bar t"></span><span class="bar t"></span></span>
+            <span>三格</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 照片(可選) -->
+      <div class="section">
+        <div class="section-label">學習剪影 <span class="en">— Photographs</span></div>
+        <div class="photo-toggle">
+          <input type="checkbox" id="photoEnabled">
+          <label for="photoEnabled">在課程表底部加入學生照片(1~3 張)</label>
+        </div>
+        <div class="photo-section" id="photoSection">
+          <div class="photo-uploader" id="photoUploader">
+            <div class="icon">+</div>
+            <div class="text">點擊或拖曳照片至此</div>
+            <input type="file" id="photoInput" accept="image/*" multiple style="display:none">
+          </div>
+          <div class="photo-list" id="photoList"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+  <!-- ===== 編輯頁結束 ===== -->
+
+  <!-- ===== 預覽頁 ===== -->
+  <div class="view" id="view-preview">
+  <div class="preview-wrap">
+    <div class="preview-frame">
+      <div class="preview-toolbar">
+        <h2>PREVIEW</h2>
+        <div class="zoom">
+          <button onclick="setZoom(-0.1)">−</button>
+          <span id="zoomVal">75%</span>
+          <button onclick="setZoom(0.1)">+</button>
+        </div>
+      </div>
+      <div class="preview-scroll">
+        <div id="preview-container">
+          <div class="elegant-paper" id="paper"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- ===== 預覽頁結束 ===== -->
+
+</div>
+
+<!-- 使用教學 Modal -->
+<div class="modal-overlay" id="helpModal">
+  <div class="modal-card modal-large">
+    <div class="modal-head">
+      <h3>使用教學</h3>
+      <button class="modal-close" onclick="closeHelp()">✕</button>
+    </div>
+    <div class="modal-body help-quick" id="helpBody">
+      <!-- 內容由 renderHelp() 動態填入,確保跟 UI 同步 -->
+    </div>
+  </div>
+</div>
+
+<!-- 更新項目 Modal -->
+<div class="modal-overlay" id="changelogModal">
+  <div class="modal-card modal-large">
+    <div class="modal-head">
+      <h3>更新項目</h3>
+      <button class="modal-close" onclick="closeChangelog()">✕</button>
+    </div>
+    <div class="modal-body" id="changelogBody">
+      <!-- 內容由 renderChangelog() 動態填入 -->
+    </div>
+  </div>
+</div>
+
+<!-- 歷史紀錄 Modal -->
+<div class="modal-overlay" id="historyModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>選擇要複製的過往紀錄</h3>
+      <button class="modal-close" onclick="closeHistoryModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-hint">系統自動保留最近 8 次下載的內容。點擊任一筆會載入該次的「課程結構」(課程欄位、標題),但日期會清空,讓你只填本週新內容。</p>
+      <div id="historyList"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- 列寬度切換的確認對話框(自訂,避免 confirm() 被擋) -->
+<div class="modal-overlay" id="rowWidthConfirmModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>切換列寬度</h3>
+    </div>
+    <div class="modal-body">
+      <div class="modal-hint" id="rwcMsg">這個切換會移除部分欄位內容,請選擇要保留的欄位:</div>
+      <div id="rwcCellList" style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;"></div>
+      <div style="display:flex; gap:8px; justify-content:flex-end;">
+        <button class="btn" onclick="closeRowWidthConfirm()">取消</button>
+        <button class="btn btn-primary" id="rwcConfirmBtn" onclick="confirmRowWidthChange()">確定</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- A4 溢出警告對話框 -->
+<div class="modal-overlay" id="overflowWarningModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>⚠ 內容超出 A4 頁面</h3>
+    </div>
+    <div class="modal-body">
+      <div style="background:#FFF1E2; border-left:4px solid #E89060; padding:12px 14px; margin-bottom:14px; line-height:1.7; color:#6B4A28; letter-spacing:0.5px;">
+        <b style="font-size:14px; color:#B85A1A;">目前的內容已超過 A4 紙張大小</b><br>
+        <span id="overflowDetail" style="font-size:12.5px; color:#8B5A28;"></span>
+      </div>
+      <div style="font-size:13px; line-height:1.85; color:var(--ink-soft); letter-spacing:0.5px; margin-bottom:14px;">
+        <b style="color:var(--ink);">建議調整方向(擇一):</b>
+        <ul style="margin:6px 0 0 18px; padding:0;">
+          <li>刪減某些欄位的文字</li>
+          <li>把「整行」的列改成「兩格」或「三格」(欄位變窄就會用較小字體)</li>
+          <li>關閉「英文副標」(顯示選項取消勾選)</li>
+          <li>刪除幾列不必要的內容</li>
+        </ul>
+      </div>
+      <div style="display:flex; gap:8px; justify-content:flex-end;">
+        <button class="btn btn-primary" onclick="closeOverflowWarning()">我知道了,先去修改</button>
+        <button class="btn" onclick="forceContinueOverflow()" style="color:#8B5A28;">仍要強制輸出</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PDF 備份提醒對話框(複製到 LINE 後跳) -->
+<div class="modal-overlay" id="pdfBackupReminderModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>📌 重要提醒</h3>
+    </div>
+    <div class="modal-body">
+      <div style="background:#FFF8E1; border-left:4px solid #E0B050; padding:14px 16px; margin-bottom:14px; line-height:1.8; color:#5A4515; letter-spacing:0.5px;">
+        <b style="font-size:14.5px; color:#8B6A20;">✓ 圖片已複製,現在可貼到 LINE</b>
+        <p style="margin:8px 0 0; font-size:13px;">傳送時請記得在 LINE 內<b style="background:#FFE9AF; padding:1px 5px;">選「原圖」</b>,否則畫質會被壓縮。</p>
+      </div>
+      <div style="background:#FFEEEE; border:1.5px solid #C77; padding:14px 16px; margin-bottom:14px; line-height:1.85; color:#5A2020; letter-spacing:0.5px;">
+        <b style="font-size:14.5px; color:#A13030;">⚠ 務必下載 PDF 備份原稿</b>
+        <p style="margin:8px 0 0; font-size:13px;">這個工具會自動記住內容,但<b>清除瀏覽器資料、換電腦、別位老師覆蓋</b>都會讓資料消失,辛苦做的內容就要重做!</p>
+        <p style="margin:6px 0 0; font-size:13px;">按「下載 PDF」會同時下載一份 <b>JSON 原稿檔</b>,存在 LINE Keep 或 Google Drive,以後可用「匯入舊檔」載回繼續編輯。</p>
+      </div>
+      <div style="display:flex; gap:8px; justify-content:flex-end;">
+        <button class="btn" onclick="closePdfBackupReminder()">我已下載過,知道了</button>
+        <button class="btn btn-primary" onclick="downloadPdfFromReminder()">立即下載 PDF 備份</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// =============================================================
+// 狀態
+// =============================================================
+const state = {
+  school: '',
+  className: '',
+  schoolYear: '',
+  semester: '',
+  theme: '',
+  fontTheme: 'elegant',
+  showEn: true,
+  showAcademic: true,
+  layoutMode: 'auto',
+  logo: null,
+  specialNote: '',
+  dateMode: 'weekly',
+  weekNum: '',
+  date1Start: '',
+  date1End: '',
+  date2Start: '',
+  date2End: '',
+  customLabel: '日期',
+  customText: '',
+  photoEnabled: false,
+  photos: [],
+  courses: []
+};
+
+// 課程欄位的英文翻譯(自動對照,當作雅緻副標)
+// 採用台灣教育部「幼兒園教保活動課程大綱」官方英譯
+const CN_EN_MAP = {
+  // 教育部六大領域(官方英譯)
+  '身體動作與健康': 'Physical Activity and Health',
+  '身體動作': 'Physical Activity',
+  '認知': 'Cognitive',
+  '語文': 'Language',
+  '社會': 'Social',
+  '情緒': 'Emotional',
+  '美感': 'Aesthetic',
+  // 常見領域組合
+  '語文與認知': 'Language and Cognitive',
+  '社會與情緒': 'Social and Emotional',
+  '美感領域': 'Aesthetic Domain',
+  '美感與藝術': 'Aesthetic and Arts',
+  // 幼幼班八項
+  '主題活動': 'Theme Activity',
+  '活動名稱': 'Activity Title',
+  '活動目標': 'Learning Objectives',
+  '小熊念兒歌': 'Nursery Rhymes',
+  '小熊玩蓋印': 'Stamp Art',
+  '幼兒美術': 'Visual Arts',
+  '潛能開發': 'Potential Development',
+  '小熊動手玩': 'Sensory Play',
+  '台語童謠': 'Taiwanese Folk Songs',
+  '愛的TOUCH': 'Affectionate Touch',
+  // 其他常見
+  '主題探索': 'Theme Exploration',
+  '角落活動': 'Learning Centers',
+  '親子任務': 'Parent-Child Activity',
+  '生活教育': 'Life Education',
+  '繪本分享': 'Picture Books',
+  '律動歌曲': 'Music and Movement',
+  '團體討論': 'Group Discussion',
+  '備註': 'Notes',
+  '英語活動': 'English Activity',
+  '健康教育': 'Health Education'
+};
+
+function getEn(zh) {
+  if (!zh) return '';
+  const trimmed = zh.trim();
+  // 嚴格優先:完全匹配
+  if (CN_EN_MAP[trimmed]) return CN_EN_MAP[trimmed];
+  // 找最長的關鍵字匹配(避免短詞誤命中)
+  const candidates = Object.keys(CN_EN_MAP)
+    .filter(k => k.length >= 3 && trimmed.includes(k))
+    .sort((a, b) => b.length - a.length);
+  if (candidates.length > 0) return CN_EN_MAP[candidates[0]];
+  return ''; // 沒對應就不顯示
+}
+
+// =============================================================
+// 表單監聽
+// =============================================================
+function setupListeners() {
+  ['school','className','schoolYear','semester','theme','specialNote'].forEach(k => {
+    const el = document.getElementById(k);
+    el.addEventListener('input', () => { state[k] = el.value; render(); });
+    el.addEventListener('change', () => { state[k] = el.value; render(); });
+    state[k] = el.value;
+  });
+
+  // 字型主題切換
+  document.querySelectorAll('#fontPicker .font-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('#fontPicker .font-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      state.fontTheme = card.dataset.theme;
+      applyFontTheme();
+    });
+  });
+
+  // Logo 上傳
+  const logoInput = document.getElementById('logoInput');
+  logoInput.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      state.logo = ev.target.result;
+      updateLogoPreview();
+      render();
+      showToast('Logo 已上傳 ✓');
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // 英文顯示開關
+  const showEnCheck = document.getElementById('showEnToggle');
+  showEnCheck.checked = state.showEn !== false;
+  showEnCheck.addEventListener('change', () => {
+    state.showEn = showEnCheck.checked;
+    renderCourseList(); // 重繪課程卡(讓 EN row 消失/出現)
+    render();
+  });
+
+  // 學年度學期顯示開關
+  const showAcademicCheck = document.getElementById('showAcademicToggle');
+  showAcademicCheck.checked = state.showAcademic !== false;
+  showAcademicCheck.addEventListener('change', () => {
+    state.showAcademic = showAcademicCheck.checked;
+    render();
+  });
+
+  // 版面配置切換
+  document.querySelectorAll('#layoutTabs button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#layoutTabs button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.layoutMode = btn.dataset.mode;
+      render();
+    });
+  });
+
+  document.querySelectorAll('#dateModeTabs button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#dateModeTabs button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.dateMode = btn.dataset.mode;
+      renderDateFields();
+      render();
+    });
+  });
+
+  // 照片開關
+  const ck = document.getElementById('photoEnabled');
+  ck.addEventListener('change', () => {
+    state.photoEnabled = ck.checked;
+    document.getElementById('photoSection').classList.toggle('show', ck.checked);
+    if (!ck.checked) state.photos = [];
+    renderPhotoList();
+    render();
+  });
+
+  // 照片上傳
+  const uploader = document.getElementById('photoUploader');
+  const input = document.getElementById('photoInput');
+  uploader.addEventListener('click', () => input.click());
+  input.addEventListener('change', e => handleFiles(e.target.files));
+  uploader.addEventListener('dragover', e => { e.preventDefault(); uploader.classList.add('dragover'); });
+  uploader.addEventListener('dragleave', () => uploader.classList.remove('dragover'));
+  uploader.addEventListener('drop', e => {
+    e.preventDefault();
+    uploader.classList.remove('dragover');
+    handleFiles(e.dataTransfer.files);
+  });
+}
+
+// =============================================================
+// 日期欄位
+// =============================================================
+function renderDateFields() {
+  const container = document.getElementById('dateFields');
+  let html = '';
+  if (state.dateMode === 'weekly') {
+    html = `<div class="date-fields-grid">
+      <div class="field span-2"><label>Week 週次</label><input type="text" id="weekNum" value="${state.weekNum||''}" placeholder="13"></div>
+      <div class="field"><label>From 起</label><input type="text" id="date1Start" value="${state.date1Start||''}" placeholder="115/05/04"></div>
+      <div class="field"><label>To 迄</label><input type="text" id="date1End" value="${state.date1End||''}" placeholder="115/05/08"></div>
+    </div>`;
+  } else if (state.dateMode === 'biweekly') {
+    html = `<div class="date-fields-grid">
+      <div class="field span-2"><label>Week 雙週次</label><input type="text" id="weekNum" value="${state.weekNum||''}" placeholder="13~14"></div>
+      <div class="field"><label>W1 起</label><input type="text" id="date1Start" value="${state.date1Start||''}" placeholder="115/05/04"></div>
+      <div class="field"><label>W1 迄</label><input type="text" id="date1End" value="${state.date1End||''}" placeholder="115/05/08"></div>
+      <div class="field"><label>W2 起</label><input type="text" id="date2Start" value="${state.date2Start||''}" placeholder="115/05/11"></div>
+      <div class="field"><label>W2 迄</label><input type="text" id="date2End" value="${state.date2End||''}" placeholder="115/05/15"></div>
+    </div>`;
+  } else if (state.dateMode === 'custom') {
+    html = `<div class="date-fields-grid">
+      <div class="field"><label>標籤名稱</label><input type="text" id="customLabel" value="${state.customLabel||'日期'}"></div>
+      <div class="field"><label>內容</label><input type="text" id="customText" value="${state.customText||''}"></div>
+    </div>`;
+  }
+  container.innerHTML = html;
+
+  ['weekNum','date1Start','date1End','date2Start','date2End','customLabel','customText'].forEach(k => {
+    const el = document.getElementById(k);
+    if (el) el.addEventListener('input', () => { state[k] = el.value; render(); });
+  });
+}
+
+// =============================================================
+// 照片
+// =============================================================
+function handleFiles(files) {
+  const imgs = Array.from(files).filter(f => f.type.startsWith('image/'));
+  if (imgs.length === 0) return;
+  const slots = 3 - state.photos.length;
+  if (slots <= 0) {
+    showToast('已達上限 3 張', 'error');
+    return;
+  }
+  imgs.slice(0, slots).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      state.photos.push({ dataUrl: e.target.result });
+      renderPhotoList();
+      render();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function removePhoto(i) {
+  state.photos.splice(i, 1);
+  renderPhotoList();
+  render();
+}
+function renderPhotoList() {
+  const list = document.getElementById('photoList');
+  list.innerHTML = state.photos.map((p, i) => `
+    <div class="photo-thumb">
+      <img src="${p.dataUrl}">
+      <button class="remove" onclick="removePhoto(${i})">✕</button>
+    </div>
+  `).join('');
+}
+
+// =============================================================
+// 課程欄位
+// =============================================================
+let courseIdSeq = 0;
+
+// 前兩格固定為「活動名稱」、「活動目標」,不可拖曳/刪除/改名
+const LOCKED_TITLES = ['活動名稱', '活動目標'];
+const LOCKED_COUNT = LOCKED_TITLES.length;
+
+function isLockedIndex(i) {
+  return i < LOCKED_COUNT;
+}
+
+// 確保 state.courses 前兩格永遠是「活動名稱」「活動目標」
+// 如果順序錯了會自動把它們移到前兩格;如果沒有會自動補上空的
+function normalizeCourses() {
+  const existing = state.courses || [];
+  // 清理舊版殘留:
+  // - 舊版「左右切半」用 bodyL/bodyR → 合併到 body 並移除 split 標記
+  // - 舊版「三分」用 triple/autoTriple → 直接移除標記
+  existing.forEach(c => {
+    if (!c) return;
+    // 舊版 bodyL/bodyR(2025-05-13 之前的 split)
+    if (c.bodyL !== undefined || c.bodyR !== undefined) {
+      const left = (c.bodyL || '').trim();
+      const right = (c.bodyR || '').trim();
+      c.body = [left, right].filter(Boolean).join('\n');
+      delete c.split;
+      delete c.bodyL;
+      delete c.bodyR;
+    }
+    // 舊版 triple
+    if (c.triple !== undefined) delete c.triple;
+    if (c.autoTriple !== undefined) delete c.autoTriple;
+  });
+  const result = [];
+  // 找出已存在的鎖定欄位,保留其內容
+  for (let i = 0; i < LOCKED_COUNT; i++) {
+    const lockedTitle = LOCKED_TITLES[i];
+    const found = existing.find(c => c && c.title === lockedTitle);
+    if (found) {
+      result.push(found);
+    } else {
+      result.push({ id: ++courseIdSeq, title: lockedTitle, body: '' });
+    }
+  }
+  // 其他非鎖定欄位依原順序加在後面
+  existing.forEach(c => {
+    if (c && !LOCKED_TITLES.includes(c.title)) {
+      result.push(c);
+    }
+  });
+  state.courses = result;
+}
+
+function addCourse(preset) {
+  const c = preset || { id: ++courseIdSeq, title: '新欄位', body: '' };
+  if (preset && !preset.id) c.id = ++courseIdSeq;
+  state.courses.push(c);
+  renderCourseList();
+  render();
+}
+
+function removeCourse(id) {
+  const i = state.courses.findIndex(c => c.id === id);
+  if (isLockedIndex(i)) {
+    showToast('「活動名稱」與「活動目標」是固定欄位,不可刪除', 'error');
+    return;
+  }
+  // 如果被刪的是 triple 欄位本身,先把標記清掉(避免邏輯混亂)
+  // 如果被刪的剛好是某 triple 欄位的「自動第三格」,前面的 triple 欄位要解除標記
+  const target = state.courses[i];
+  if (target && target.triple) {
+    // 刪 triple 本身就連同它後面 2 個一起拿掉,避免變孤格
+    state.courses.splice(i, 3);
+  } else {
+    // 看看被刪的前一格或前兩格是不是 triple
+    const prev2 = state.courses[i - 2];
+    if (prev2 && prev2.triple) {
+      // 被刪的是 triple 影響的第三格 → 把 prev2 的 triple 標記取消
+      prev2.triple = false;
+    }
+    state.courses = state.courses.filter(c => c.id !== id);
+  }
+  renderCourseList();
+  render();
+}
+
+function moveCourse(id, dir) {
+  const i = state.courses.findIndex(c => c.id === id);
+  if (isLockedIndex(i)) {
+    showToast('「活動名稱」與「活動目標」是固定欄位,不可移動', 'error');
+    return;
+  }
+  const j = i + dir;
+  // 移動目的地不可進入鎖定區
+  if (j < LOCKED_COUNT || j >= state.courses.length) return;
+  [state.courses[i], state.courses[j]] = [state.courses[j], state.courses[i]];
+  renderCourseList();
+  render();
+}
+
+// =============================================================
+// Row-based 編輯區渲染
+// 資料層仍是 state.courses 線性陣列;UI 層根據 width 自動分組成列
+// =============================================================
+
+// 把 state.courses 自動分組成「視覺列」
+// 邏輯:
+//   - 鎖定的兩格(活動名稱/活動目標)強制為一列(兩格)
+//   - 其餘卡片:依 width 順序湊列
+//     full = 自己一列;half = 兩格一列;third = 三格一列
+//   - 不足的湊不滿,獨自成列(視為該寬度)
+function buildRowsFromCourses() {
+  const rows = [];
+  // 鎖定列
+  const lockedCells = state.courses.slice(0, LOCKED_COUNT);
+  rows.push({ width: 'half', cells: lockedCells, locked: true });
+
+  // 一般列
+  const rest = state.courses.slice(LOCKED_COUNT);
+  let i = 0;
+  while (i < rest.length) {
+    const c = rest[i];
+    const w = c.width || 'half';
+    if (w === 'full') {
+      rows.push({ width: 'full', cells: [c], locked: false });
+      i += 1;
+    } else if (w === 'third') {
+      // 連續同寬度湊 3 個
+      const group = [c];
+      let j = i + 1;
+      while (j < rest.length && (rest[j].width || 'half') === 'third' && group.length < 3) {
+        group.push(rest[j]);
+        j++;
+      }
+      rows.push({ width: 'third', cells: group, locked: false });
+      i = j;
+    } else { // half
+      const group = [c];
+      let j = i + 1;
+      while (j < rest.length && (rest[j].width || 'half') === 'half' && group.length < 2) {
+        group.push(rest[j]);
+        j++;
+      }
+      rows.push({ width: 'half', cells: group, locked: false });
+      i = j;
+    }
+  }
+  return rows;
+}
+
+function renderCourseList() {
+  const list = document.getElementById('courseList');
+  const rows = buildRowsFromCourses();
+  list.innerHTML = rows.map((row, rIdx) => renderRow(row, rIdx)).join('');
+  list.querySelectorAll('textarea.body-input').forEach(autoResize);
+}
+
+function renderRow(row, rIdx) {
+  const widthLabel = { full: '整行', half: '兩格', third: '三格' }[row.width];
+  const isLocked = row.locked;
+  // 渲染 cells 並在相鄰兩個 cell 之間插入交換鈕(放在 row-cells 內,絕對定位浮在 gap 上)
+  const cellPieces = [];
+  row.cells.forEach((c, idx) => {
+    cellPieces.push(renderCardCell(c, isLocked, idx, row.cells.length));
+  });
+  // 用一個外層容器,把交換鈕做為附加層
+  const swapButtons = [];
+  if (!isLocked && row.cells.length > 1) {
+    for (let i = 0; i < row.cells.length - 1; i++) {
+      // 第 i 與第 i+1 個 cell 之間的分隔處
+      const leftId = row.cells[i].id;
+      // 分隔位置:平均分佈在 1/n、2/n... 處(n = cells 數量)
+      const percent = ((i + 1) / row.cells.length) * 100;
+      swapButtons.push(`
+        <button class="cell-swap-mid" style="left: ${percent}%;"
+                onclick="swapCellRight(${leftId})"
+                title="交換左右兩格的位置"
+                aria-label="交換左右兩格的位置">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="7 8 3 12 7 16"></polyline>
+            <polyline points="17 8 21 12 17 16"></polyline>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+          </svg>
+        </button>`);
+    }
+  }
+  const cellsBlock = `
+    <div class="row-cells" data-w="${row.width}">
+      ${cellPieces.join('')}
+      ${swapButtons.join('')}
+    </div>`;
+
+  // 鎖定列
+  if (isLocked) {
+    return `
+      <div class="course-row locked-row" data-row-index="${rIdx}">
+        <div class="course-row-head">
+          <span class="lock-icon" title="活動名稱與活動目標為固定欄位,不可變更">🔒</span>
+          <span class="row-label">固定欄位</span>
+        </div>
+        ${cellsBlock}
+      </div>`;
+  }
+  // 一般列
+  return `
+    <div class="course-row" data-row-index="${rIdx}" data-row-width="${row.width}">
+      <div class="course-row-head">
+        <div class="row-drag-handle"
+             draggable="true"
+             ondragstart="onRowDragStart(event, ${rIdx})"
+             ondragend="onRowDragEnd(event)"
+             title="拖曳調整列的位置">
+          <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="5" cy="3" r="1.3"/><circle cx="11" cy="3" r="1.3"/>
+            <circle cx="5" cy="8" r="1.3"/><circle cx="11" cy="8" r="1.3"/>
+            <circle cx="5" cy="13" r="1.3"/><circle cx="11" cy="13" r="1.3"/>
+          </svg>
+        </div>
+        <span class="row-label"><span class="row-num">${rIdx}</span>${widthLabel}</span>
+        <div class="row-width-picker" title="切換此列版面">
+          <button class="w-opt ${row.width === 'full' ? 'active' : ''}" onclick="setRowWidth(${rIdx}, 'full')" title="整行(1 格)"><span class="w-icon"><span class="f"></span></span><span>整行</span></button>
+          <button class="w-opt ${row.width === 'half' ? 'active' : ''}" onclick="setRowWidth(${rIdx}, 'half')" title="兩格"><span class="w-icon"><span class="h"></span><span class="h"></span></span><span>兩格</span></button>
+          <button class="w-opt ${row.width === 'third' ? 'active' : ''}" onclick="setRowWidth(${rIdx}, 'third')" title="三格"><span class="w-icon"><span class="t"></span><span class="t"></span><span class="t"></span></span><span>三格</span></button>
+        </div>
+        <button class="row-delete" onclick="deleteRow(${rIdx})" title="刪除此列" aria-label="刪除此列">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+        </button>
+      </div>
+      ${cellsBlock}
+    </div>`;
+}
+
+function renderCardCell(c, locked, posInRow, totalInRow) {
+  const autoEn = getEn(c.title);
+  const showEn = c.customEn !== undefined ? c.customEn : autoEn;
+  return `
+    <div class="course-card ${locked ? 'locked' : ''}" data-id="${c.id}" data-cid="${c.id}">
+      <div class="card-head">
+        ${locked ? `<span class="lock-icon" title="固定欄位,不可變更標題">🔒</span>` : ''}
+        <input class="title-input ${locked ? 'readonly' : ''}" type="text" value="${escAttr(c.title)}"
+               ${locked ? 'readonly title="此欄位為固定標題,不可修改"' : 'placeholder="輸入此欄位名稱"'}
+               onchange="updateCourse(${c.id}, 'title', this.value)">
+      </div>
+      ${state.showEn !== false ? `
+        <div class="en-row">
+          <span class="en-label">EN</span>
+          <input type="text" class="en-input" value="${escAttr(showEn)}"
+                 placeholder="${escAttr(autoEn) || '英文副標(可留空)'}"
+                 oninput="updateCourseEn(${c.id}, this.value)">
+          ${c.customEn !== undefined ? `<button class="en-reset" onclick="resetCourseEn(${c.id})" title="恢復自動">⟲</button>` : ''}
+        </div>
+      ` : ''}
+      <textarea class="body-input" placeholder="輸入此區塊的內容..."
+                oninput="updateCourse(${c.id}, 'body', this.value); autoResize(this); render();">${escHtml(c.body || '')}</textarea>
+    </div>`;
+}
+
+// =============================================================
+// 同列內左右交換:把指定 cell 跟同列的左/右相鄰 cell 交換位置
+// =============================================================
+function swapCellLeft(id) {
+  swapCellAdjacent(id, -1);
+}
+function swapCellRight(id) {
+  swapCellAdjacent(id, +1);
+}
+function swapCellAdjacent(id, direction) {
+  // 找出這張 cell 在哪一列、列內第幾位
+  const rows = buildRowsFromCourses();
+  let foundRow = null, foundPos = -1;
+  for (const r of rows) {
+    const pos = r.cells.findIndex(c => c.id === id);
+    if (pos >= 0) { foundRow = r; foundPos = pos; break; }
+  }
+  if (!foundRow || foundRow.locked) return;
+  const newPos = foundPos + direction;
+  if (newPos < 0 || newPos >= foundRow.cells.length) return;
+
+  // 兩個 cell 的 id
+  const idA = foundRow.cells[foundPos].id;
+  const idB = foundRow.cells[newPos].id;
+  // 在 state.courses 中對調位置
+  const iA = state.courses.findIndex(c => c.id === idA);
+  const iB = state.courses.findIndex(c => c.id === idB);
+  if (iA < 0 || iB < 0) return;
+  [state.courses[iA], state.courses[iB]] = [state.courses[iB], state.courses[iA]];
+
+  renderCourseList();
+  render();
+}
+
+// =============================================================
+// 列操作:新增、刪除、切換寬度
+// =============================================================
+function addRow(width) {
+  // 新增 width 對應的格子數
+  const count = { full: 1, half: 2, third: 3 }[width] || 1;
+  for (let k = 0; k < count; k++) {
+    const c = { id: ++courseIdSeq, title: '新欄位', body: '' };
+    if (width !== 'half') c.width = width;
+    state.courses.push(c);
+  }
+  renderCourseList();
+  render();
+}
+
+function deleteRow(rIdx) {
+  const rows = buildRowsFromCourses();
+  if (rIdx < 0 || rIdx >= rows.length) return;
+  const row = rows[rIdx];
+  if (row.locked) {
+    showToast('固定欄位列不可刪除', 'error');
+    return;
+  }
+  // 檢查列內是否有實際內容
+  const hasContent = row.cells.some(c => (c.body && c.body.trim()) || (c.title && c.title !== '新欄位' && c.title.trim()));
+  if (hasContent) {
+    if (!confirm('此列包含已填寫的內容,確定要刪除整列嗎?')) return;
+  }
+  // 從 state.courses 移除所有此列的卡片
+  const idsToRemove = new Set(row.cells.map(c => c.id));
+  state.courses = state.courses.filter(c => !idsToRemove.has(c.id));
+  renderCourseList();
+  render();
+}
+
+// 暫存正在進行的列寬度切換決定
+let pendingRowChange = null;
+
+function openRowWidthConfirm(rIdx, newWidth, row, oldCount, newCount) {
+  const widthLabel = { full:'整行', half:'兩格', third:'三格' }[newWidth];
+  // 計算最多可保留幾格,讓使用者用 checkbox 勾選
+  // 預設保留前 newCount 格
+  pendingRowChange = {
+    rIdx, newWidth, row, newCount,
+    keepIds: new Set(row.cells.slice(0, newCount).map(c => c.id))
+  };
+  const msg = document.getElementById('rwcMsg');
+  msg.textContent = `要把這列改成「${widthLabel}」(${newCount} 格),請勾選要保留的欄位 (最多 ${newCount} 格):`;
+
+  const listEl = document.getElementById('rwcCellList');
+  listEl.innerHTML = row.cells.map(c => {
+    const bodyPreview = (c.body || '').trim().slice(0, 30) + ((c.body || '').length > 30 ? '...' : '');
+    const checked = pendingRowChange.keepIds.has(c.id);
+    const isEmpty = !(c.body && c.body.trim());
+    return `
+      <label style="display:flex; gap:10px; padding:10px 12px; border:1px solid var(--line); cursor:pointer; align-items:flex-start; background:${checked ? 'rgba(195,162,100,0.06)' : 'white'};">
+        <input type="checkbox" ${checked ? 'checked' : ''}
+               onchange="toggleKeepCell(${c.id}, this.checked)"
+               style="margin-top:3px; flex-shrink:0;">
+        <div style="flex:1; min-width:0;">
+          <div style="font-weight:500; font-size:13px; color:var(--ink); letter-spacing:1px;">${escHtml(c.title || '(無標題)')}</div>
+          <div style="font-size:11.5px; color:var(--ink-faint); margin-top:2px;">${isEmpty ? '(無內容)' : escHtml(bodyPreview)}</div>
+        </div>
+      </label>`;
+  }).join('');
+
+  document.getElementById('rowWidthConfirmModal').classList.add('show');
+  updateRwcConfirmBtn();
+}
+
+function toggleKeepCell(cellId, checked) {
+  if (!pendingRowChange) return;
+  const { newCount, keepIds } = pendingRowChange;
+  if (checked) {
+    if (keepIds.size >= newCount) {
+      // 已達上限,要先取消另一格 — 自動取消最早勾選的
+      const firstId = keepIds.values().next().value;
+      keepIds.delete(firstId);
+    }
+    keepIds.add(cellId);
+  } else {
+    keepIds.delete(cellId);
+  }
+  // 重繪 modal 內 checkbox 與背景
+  const labels = document.querySelectorAll('#rwcCellList label');
+  labels.forEach(lb => {
+    const cb = lb.querySelector('input');
+    const idMatch = cb.getAttribute('onchange').match(/\d+/);
+    if (!idMatch) return;
+    const id = Number(idMatch[0]);
+    cb.checked = keepIds.has(id);
+    lb.style.background = cb.checked ? 'rgba(195,162,100,0.06)' : 'white';
+  });
+  updateRwcConfirmBtn();
+}
+
+function updateRwcConfirmBtn() {
+  const btn = document.getElementById('rwcConfirmBtn');
+  if (!pendingRowChange || !btn) return;
+  const { newCount, keepIds } = pendingRowChange;
+  btn.disabled = keepIds.size === 0;
+  btn.textContent = `保留 ${keepIds.size}/${newCount} 格,確定`;
+}
+
+function closeRowWidthConfirm() {
+  document.getElementById('rowWidthConfirmModal').classList.remove('show');
+  pendingRowChange = null;
+  showToast('已取消變更', 'info');
+}
+
+function confirmRowWidthChange() {
+  if (!pendingRowChange) return;
+  const { row, newWidth, keepIds } = pendingRowChange;
+  // 從 state.courses 刪除「不保留」的 cell
+  const toRemoveIds = new Set();
+  row.cells.forEach(c => {
+    if (!keepIds.has(c.id)) toRemoveIds.add(c.id);
+  });
+  state.courses = state.courses.filter(c => !toRemoveIds.has(c.id));
+  // 更新保留下來的卡片的 width
+  state.courses.forEach(c => {
+    if (keepIds.has(c.id)) {
+      if (newWidth === 'half') delete c.width;
+      else c.width = newWidth;
+    }
+  });
+  document.getElementById('rowWidthConfirmModal').classList.remove('show');
+  pendingRowChange = null;
+  renderCourseList();
+  render();
+}
+
+function setRowWidth(rIdx, newWidth) {
+  const rows = buildRowsFromCourses();
+  if (rIdx < 0 || rIdx >= rows.length) return;
+  const row = rows[rIdx];
+  if (row.locked) return;
+  if (row.width === newWidth) return;
+
+  const oldCount = row.cells.length;
+  const newCount = { full: 1, half: 2, third: 3 }[newWidth];
+
+  if (newCount < oldCount) {
+    // 變窄:檢查多出來的格子是否有「實質內容」
+    const toRemove = row.cells.slice(newCount);
+    const hasContent = toRemove.some(c => (c.body && c.body.trim().length > 0));
+    if (hasContent) {
+      // 開 modal 讓使用者選保留哪幾格
+      openRowWidthConfirm(rIdx, newWidth, row, oldCount, newCount);
+      return;
+    }
+    // 沒內容,直接移除
+    const idsToRemove = new Set(toRemove.map(c => c.id));
+    state.courses = state.courses.filter(c => !idsToRemove.has(c.id));
+    row.cells.slice(0, newCount).forEach(c => {
+      if (newWidth === 'half') delete c.width;
+      else c.width = newWidth;
+    });
+  } else if (newCount > oldCount) {
+    row.cells.forEach(c => {
+      if (newWidth === 'half') delete c.width;
+      else c.width = newWidth;
+    });
+    const lastCellId = row.cells[row.cells.length - 1].id;
+    const insertAt = state.courses.findIndex(c => c.id === lastCellId) + 1;
+    const newCells = [];
+    for (let k = 0; k < newCount - oldCount; k++) {
+      const nc = { id: ++courseIdSeq, title: '新欄位', body: '' };
+      if (newWidth !== 'half') nc.width = newWidth;
+      newCells.push(nc);
+    }
+    state.courses.splice(insertAt, 0, ...newCells);
+  } else {
+    row.cells.forEach(c => {
+      if (newWidth === 'half') delete c.width;
+      else c.width = newWidth;
+    });
+  }
+  renderCourseList();
+  render();
+}
+
+// =============================================================
+// 編輯區拖曳:列的上下重排
+// =============================================================
+let rowDragIndex = null;
+let rowDropBeforeIndex = null;
+let rowIndicatorEl = null;
+
+function onRowDragStart(e, rIdx) {
+  rowDragIndex = rIdx;
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', String(rIdx));
+  const rowEl = e.target.closest('.course-row');
+  if (rowEl) rowEl.classList.add('dragging-row');
+}
+
+function onRowDragOver(e) {
+  if (rowDragIndex === null) return;
+  const list = document.getElementById('courseList');
+  if (!list || !list.contains(e.target)) {
+    clearRowIndicator();
+    return;
+  }
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+
+  const rows = Array.from(list.querySelectorAll('.course-row'));
+  if (rows.length === 0) return;
+
+  let insertBefore = rows.length;
+  for (let i = 0; i < rows.length; i++) {
+    const rect = rows[i].getBoundingClientRect();
+    const mid = rect.top + rect.height / 2;
+    if (e.clientY < mid) { insertBefore = i; break; }
+  }
+  // 鎖定列固定第 0:不能插到 0 之前
+  if (insertBefore < 1) insertBefore = 1;
+  if (insertBefore === rowDropBeforeIndex) return;
+  rowDropBeforeIndex = insertBefore;
+  showRowIndicator(list, rows, insertBefore);
+}
+
+function showRowIndicator(list, rows, insertBefore) {
+  clearRowIndicator();
+  rowIndicatorEl = document.createElement('div');
+  rowIndicatorEl.className = 'row-drop-indicator';
+  if (insertBefore >= rows.length) list.appendChild(rowIndicatorEl);
+  else list.insertBefore(rowIndicatorEl, rows[insertBefore]);
+}
+
+function clearRowIndicator() {
+  if (rowIndicatorEl && rowIndicatorEl.parentNode) {
+    rowIndicatorEl.parentNode.removeChild(rowIndicatorEl);
+  }
+  rowIndicatorEl = null;
+}
+
+function onRowDrop(e) {
+  if (rowDragIndex === null) { cleanupRowDrag(); return; }
+  const list = document.getElementById('courseList');
+  if (!list || !list.contains(e.target)) { cleanupRowDrag(); return; }
+  e.preventDefault();
+
+  const sourceRowIdx = rowDragIndex;
+  let targetRowIdx = rowDropBeforeIndex;
+  if (targetRowIdx === null) { cleanupRowDrag(); return; }
+  if (sourceRowIdx === targetRowIdx || sourceRowIdx + 1 === targetRowIdx) {
+    cleanupRowDrag();
+    return;
+  }
+
+  // 將「列」轉成「卡片區間」,在 state.courses 重排
+  const rows = buildRowsFromCourses();
+  if (sourceRowIdx >= rows.length || rows[sourceRowIdx].locked) {
+    cleanupRowDrag();
+    return;
+  }
+  // 重組 courses:鎖定列保持最前,然後依新順序串接所有列
+  const newRows = [...rows];
+  const [movedRow] = newRows.splice(sourceRowIdx, 1);
+  // 因為移除了一個,如果原本在前面,目標 index 要 -1
+  if (sourceRowIdx < targetRowIdx) targetRowIdx -= 1;
+  if (targetRowIdx < 1) targetRowIdx = 1; // 確保不插到鎖定列前
+  newRows.splice(targetRowIdx, 0, movedRow);
+
+  // 串成新的 courses 陣列
+  state.courses = newRows.flatMap(r => r.cells);
+
+  cleanupRowDrag();
+  renderCourseList();
+  render();
+}
+
+function onRowDragEnd(e) {
+  cleanupRowDrag();
+}
+
+function cleanupRowDrag() {
+  rowDragIndex = null;
+  rowDropBeforeIndex = null;
+  clearRowIndicator();
+  document.querySelectorAll('.course-row.dragging-row').forEach(el => {
+    el.classList.remove('dragging-row');
+  });
+}
+
+function installEditDragListeners() {
+  const list = document.getElementById('courseList');
+  if (!list) return;
+  list.addEventListener('dragover', onRowDragOver);
+  list.addEventListener('drop', onRowDrop);
+  list.addEventListener('dragleave', e => {
+    if (!list.contains(e.relatedTarget)) clearRowIndicator();
+  });
+}
+
+// =============================================================
+// 拖曳排序(發生在預覽紙上)
+// 用「全域 dragover」抓 closest 的可拖曳格子,提高靈敏度
+// 避免「拖到最後一格無效」「拖到子元素無效」等子元素冒泡問題
+// =============================================================
+let dragSourceId = null;
+let lastDropTarget = null;
+
+function onPaperDragStart(e, id) {
+  const i = state.courses.findIndex(c => c.id === id);
+  if (isLockedIndex(i)) {
+    e.preventDefault();
+    return;
+  }
+  dragSourceId = id;
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', String(id));
+  // 標記正在拖曳的格子(找最近的可拖曳元素)
+  const el = e.target.closest('[data-cid]');
+  if (el) el.classList.add('cell-dragging');
+}
+
+// 全域 dragover:不論滑鼠在格子的哪個子元素上,都能找到目標格子
+function onGlobalDragOver(e) {
+  if (dragSourceId === null) return;
+  // 找最近的有 data-cid 的可拖曳元素
+  const target = e.target.closest('[data-cid]');
+  if (!target) {
+    // 清掉舊高亮
+    if (lastDropTarget) {
+      lastDropTarget.classList.remove('cell-drop-target');
+      lastDropTarget = null;
+    }
+    return;
+  }
+  const targetId = parseInt(target.dataset.cid, 10);
+  if (targetId === dragSourceId) return;
+  const targetIndex = state.courses.findIndex(c => c.id === targetId);
+  if (isLockedIndex(targetIndex)) return;
+  // 允許 drop
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  // 切換高亮:只有當目標真的變了才更新
+  if (lastDropTarget !== target) {
+    if (lastDropTarget) lastDropTarget.classList.remove('cell-drop-target');
+    target.classList.add('cell-drop-target');
+    lastDropTarget = target;
+  }
+}
+
+// 全域 drop:同樣用 closest 找目標
+function onGlobalDrop(e) {
+  if (dragSourceId === null) {
+    cleanupDrag();
+    return;
+  }
+  const target = e.target.closest('[data-cid]');
+  if (!target) {
+    cleanupDrag();
+    return;
+  }
+  e.preventDefault();
+  const targetId = parseInt(target.dataset.cid, 10);
+  if (targetId === dragSourceId) {
+    cleanupDrag();
+    return;
+  }
+  const sourceIndex = state.courses.findIndex(c => c.id === dragSourceId);
+  const targetIndex = state.courses.findIndex(c => c.id === targetId);
+  if (sourceIndex < 0 || targetIndex < 0 || isLockedIndex(targetIndex)) {
+    cleanupDrag();
+    return;
+  }
+  // 取出 source,插入到 target 位置
+  const [moved] = state.courses.splice(sourceIndex, 1);
+  const newTargetIndex = state.courses.findIndex(c => c.id === targetId);
+  state.courses.splice(newTargetIndex, 0, moved);
+  cleanupDrag();
+  renderCourseList();
+  render();
+}
+
+function onPaperDragEnd(e) {
+  cleanupDrag();
+}
+
+function cleanupDrag() {
+  dragSourceId = null;
+  if (lastDropTarget) {
+    lastDropTarget.classList.remove('cell-drop-target');
+    lastDropTarget = null;
+  }
+  document.querySelectorAll('.cell-dragging, .cell-drop-target').forEach(el => {
+    el.classList.remove('cell-dragging', 'cell-drop-target');
+  });
+}
+
+// 註冊全域監聽:用 capture 確保比子元素先拿到
+function installPaperDragListeners() {
+  const paper = document.getElementById('paper');
+  if (!paper) return;
+  paper.addEventListener('dragover', onGlobalDragOver);
+  paper.addEventListener('drop', onGlobalDrop);
+  paper.addEventListener('dragleave', e => {
+    // 滑鼠真的離開預覽紙才清高亮
+    if (!paper.contains(e.relatedTarget) && lastDropTarget) {
+      lastDropTarget.classList.remove('cell-drop-target');
+      lastDropTarget = null;
+    }
+  });
+}
+
+
+// 更新英文副標(由使用者手動輸入)
+function updateCourseEn(id, value) {
+  const c = state.courses.find(c => c.id === id);
+  if (!c) return;
+  const autoEn = getEn(c.title);
+  if (value === autoEn || value === '') {
+    delete c.customEn;
+  } else {
+    c.customEn = value;
+  }
+  render();
+}
+
+// 恢復自動英文
+function resetCourseEn(id) {
+  const c = state.courses.find(c => c.id === id);
+  if (!c) return;
+  delete c.customEn;
+  renderCourseList();
+  render();
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = (el.scrollHeight + 2) + 'px';
+}
+
+function updateCourse(id, key, value) {
+  const c = state.courses.find(c => c.id === id);
+  if (!c) return;
+  // 鎖定欄位的 title 不可改
+  if (key === 'title') {
+    const i = state.courses.findIndex(x => x.id === id);
+    if (isLockedIndex(i)) {
+      // 強制還原為固定標題並重新渲染
+      c.title = LOCKED_TITLES[i];
+      renderCourseList();
+      render();
+      return;
+    }
+  }
+  c[key] = value;
+  render();
+}
+
+// 設定欄位寬度:'half'(½)、'third'(⅓)、'full'(整行)
+function setCourseWidth(id, width) {
+  const c = state.courses.find(c => c.id === id);
+  if (!c) return;
+  if (width === 'half') {
+    delete c.width; // 預設不存,節省 JSON
+  } else {
+    c.width = width;
+  }
+  renderCourseList();
+  render();
+}
+
+// 加入/移除單個課程的照片
+function toggleCoursePhoto(id) {
+  const c = state.courses.find(c => c.id === id);
+  if (!c) return;
+  if (c.photo) {
+    if (confirm('要移除這項的照片嗎?')) {
+      c.photo = null;
+      renderCourseList();
+      render();
+    }
+  } else {
+    // 開檔案選擇
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        c.photo = ev.target.result;
+        renderCourseList();
+        render();
+        showToast('照片已加入');
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  }
+}
+
+function setCoursePhoto(id, dataUrl) {
+  const c = state.courses.find(c => c.id === id);
+  if (!c) return;
+  c.photo = dataUrl;
+  if (!dataUrl) delete c.photoFocus;
+  renderCourseList();
+  render();
+}
+
+function setCoursePhotoFocus(id, focus) {
+  const c = state.courses.find(c => c.id === id);
+  if (!c) return;
+  c.photoFocus = focus;
+  renderCourseList();
+  render();
+}
+
+function escHtml(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s) { return (s||'').replace(/"/g,'&quot;'); }
+
+// escHtmlFull = 先轉全形標點,再 escape HTML
+// 用於「預覽紙上會顯示的老師輸入內容」,輸入區仍維持原文
+function escHtmlFull(s) { return escHtml(toFullPunct(s || '')); }
+
+// =============================================================
+// 智慧全形標點轉換(只在預覽/輸出時用)
+//
+// 原則:中文標點要全形看起來才優雅,但要保護:
+//   1. 行首編號:1. 2. 3.、(1)(2)、a. b. c.
+//   2. 日期/時間:2/8、115/5/4、14:00
+//   3. 數字 + 標點:5.5、99.99
+//   4. 英文單詞 + 標點:Mr. Dr. (因為英文用半形才對)
+// =============================================================
+function toFullPunct(input) {
+  if (!input) return input;
+  // 逐行處理,保護行首的「編號」
+  return input.split('\n').map(line => {
+    // 偵測並保護行首編號樣式:1. / 1) / (1) / a. / a) / 一、 / ① 等
+    // 編號樣式統一不轉
+    const m = line.match(/^(\s*(?:\d+|[a-zA-Z①-⑳]|[一二三四五六七八九十])\s*[\.\)、]\s*)(.*)$/);
+    let prefix = '';
+    let rest = line;
+    if (m) {
+      prefix = m[1];
+      rest = m[2];
+    }
+    return prefix + convertPunctInText(rest);
+  }).join('\n');
+}
+
+// 對「非編號」的內文做標點轉換
+function convertPunctInText(text) {
+  let s = text;
+  // 規則:把標點轉換成全形版本,但前後一定要有「中文字」上下文
+  // 用「lookbehind 中文」+ 「lookahead 中文/結尾/空白」來確認
+  const cjk = '\u4E00-\u9FFF\u3040-\u30FF\uFF66-\uFF9F'; // 中日韓 + 平假名 + 片假名
+  const cjkClass = `[${cjk}]`;
+  const endOrSpace = `(?=[${cjk}\\s]|$)`; // 後面是中文、空白或行尾
+
+  // 注意:以下用的全形標點碼點(明確標示避免混淆)
+  //   ， U+FF0C 全形逗號
+  //   。 U+3002 全形句號
+  //   : U+FF1A 全形冒號
+  //   ; U+FF1B 全形分號
+  //   ! U+FF01 全形驚嘆號
+  //   ? U+FF1F 全形問號
+  //   ( U+FF08 全形左括號
+  //   ) U+FF09 全形右括號
+
+  // 句號:中文後接 . 且後面不是數字/英文 → 。
+  s = s.replace(new RegExp(`(${cjkClass})\\.(${endOrSpace}|$)`, 'g'), '$1\u3002$2');
+  // 處理結尾的中文加句號(後面沒東西)
+  s = s.replace(new RegExp(`(${cjkClass})\\.$`, 'g'), '$1\u3002');
+
+  // 逗號:中文 + , + (中文/空白/結尾) → ,(U+FF0C)
+  s = s.replace(new RegExp(`(${cjkClass}),(?=${cjkClass}|\\s|$)`, 'g'), '$1\uFF0C');
+
+  // 冒號:中文 + : → :(U+FF1A)
+  // 時間 14:00 的冒號前面是數字,不會被此規則匹配,因此自動保留
+  s = s.replace(new RegExp(`(${cjkClass}):`, 'g'), '$1\uFF1A');
+
+  // 分號:中文 + ; → ;(U+FF1B)
+  s = s.replace(new RegExp(`(${cjkClass});`, 'g'), '$1\uFF1B');
+
+  // 驚嘆號:中文 + ! → !(U+FF01)
+  s = s.replace(new RegExp(`(${cjkClass})!`, 'g'), '$1\uFF01');
+
+  // 問號:中文 + ? → ?(U+FF1F)
+  s = s.replace(new RegExp(`(${cjkClass})\\?`, 'g'), '$1\uFF1F');
+
+  // 括號:中文 + ( ... ) + 中文/結尾 → ((U+FF08) ... )(U+FF09)
+  s = s.replace(new RegExp(`(${cjkClass})\\(([^()]*?${cjkClass}[^()]*?)\\)`, 'g'), '$1\uFF08$2\uFF09');
+  s = s.replace(new RegExp(`(${cjkClass})\\(`, 'g'), '$1\uFF08');
+  s = s.replace(new RegExp(`\\)(${cjkClass})`, 'g'), '\uFF09$1');
+
+  // 引號:把 "中文..." 整段轉成 「中文...」(U+300C / U+300D)
+  s = s.replace(new RegExp(`"([^"]*?${cjkClass}[^"]*?)"`, 'g'), '\u300C$1\u300D');
+
+  // 破折號連續 -- → 全形破折號 ——(U+2014 兩個)
+  s = s.replace(/([\u4E00-\u9FFF])--(?=[\u4E00-\u9FFF])/g, '$1\u2014\u2014');
+
+  return s;
+}
+
+// =============================================================
+// 持久化儲存(localStorage)
+// =============================================================
+const STORAGE_KEY = 'curriculum_app_v1';
+const HISTORY_KEY = 'curriculum_history_v1';
+const TEMPLATE_KEY = 'curriculum_template_v1';
+const HISTORY_MAX = 8;  // 最多記住 8 次
+
+let saveTimer = null;
+function saveToStorage() {
+  // 防抖:停止輸入 500ms 後才存
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try {
+      const snapshot = JSON.parse(JSON.stringify(state));
+      // 不存照片(太大,localStorage 上限 5MB),老師每週手動加圖
+      snapshot.photos = [];
+      snapshot.courses = snapshot.courses.map(c => ({ ...c, photo: null }));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
+    } catch (e) {
+      console.warn('儲存失敗', e);
+    }
+  }, 500);
+}
+
+function loadFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    const data = JSON.parse(raw);
+    Object.assign(state, data);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+// 加入到歷史(最多 8 筆)
+function addToHistory() {
+  if (!state.theme && state.courses.length === 0) return;
+  try {
+    const raw = localStorage.getItem(HISTORY_KEY);
+    let history = raw ? JSON.parse(raw) : [];
+    const snapshot = JSON.parse(JSON.stringify(state));
+    snapshot.photos = [];
+    snapshot.courses = snapshot.courses.map(c => ({ ...c, photo: null }));
+    snapshot._savedAt = new Date().toISOString();
+    snapshot._label = `${state.theme || '未命名'}・${state.weekNum || state.date1Start || '無日期'}`;
+    history.unshift(snapshot);
+    history = history.slice(0, HISTORY_MAX);
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  } catch (e) {
+    console.warn('歷史儲存失敗', e);
+  }
+}
+
+function getHistory() {
+  try {
+    const raw = localStorage.getItem(HISTORY_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
+}
+
+function loadFromHistory(idx) {
+  const history = getHistory();
+  if (!history[idx]) return;
+  // 只複製課程結構,清空週次/日期(老師會改)
+  const snap = history[idx];
+  state.theme = snap.theme || '';
+  state.courses = (snap.courses || []).map(c => ({ ...c, id: ++courseIdSeq, photo: null }));
+  normalizeCourses();
+  state.date1Start = '';
+  state.date1End = '';
+  // 重新寫回 form
+  document.getElementById('theme').value = state.theme;
+  renderDateFields();
+  renderCourseList();
+  applyFontTheme();
+  render();
+  closeHistoryModal();
+  showToast('已載入,記得改本週日期 ✨');
+}
+
+// 園所範本(園長存,老師套用)
+function saveAsTemplate() {
+  if (state.courses.length === 0) {
+    showToast('請先填好內容再儲存', 'error');
+    return;
+  }
+  if (!confirm('要把目前的內容(學校、班級、學年度、學期、所有課程欄位)儲存為「園所範本」嗎?\n\n之後老師點「載入園所範本」就能一鍵套用,只需要修改本週日期和內容。\n\n注意:這會覆蓋舊的園所範本。')) return;
+  try {
+    const snapshot = JSON.parse(JSON.stringify(state));
+    snapshot.photos = [];
+    snapshot.courses = snapshot.courses.map(c => ({ ...c, photo: null, body: '' })); // 範本不留具體內容
+    snapshot._savedAt = new Date().toISOString();
+    localStorage.setItem(TEMPLATE_KEY, JSON.stringify(snapshot));
+    showToast('園所範本已儲存 ✓');
+  } catch (e) {
+    showToast('儲存失敗', 'error');
+  }
+}
+
+function loadTemplate() {
+  try {
+    const raw = localStorage.getItem(TEMPLATE_KEY);
+    if (!raw) {
+      showToast('尚未儲存園所範本', 'error');
+      return;
+    }
+    const snap = JSON.parse(raw);
+    state.school = snap.school || '';
+    state.className = snap.className || '';
+    state.schoolYear = snap.schoolYear || '';
+    state.semester = snap.semester || '';
+    state.fontTheme = snap.fontTheme || 'elegant';
+    state.theme = '';
+    state.weekNum = '';
+    state.date1Start = '';
+    state.date1End = '';
+    state.courses = (snap.courses || []).map(c => ({
+      id: ++courseIdSeq,
+      title: c.title,
+      body: '',
+      customEn: c.customEn,
+      photo: null
+    }));
+    normalizeCourses();
+    // 寫回 form
+    document.getElementById('school').value = state.school;
+    document.getElementById('className').value = state.className;
+    document.getElementById('schoolYear').value = state.schoolYear;
+    document.getElementById('semester').value = state.semester;
+    document.getElementById('theme').value = '';
+    // 字型
+    document.querySelectorAll('#fontPicker .font-card').forEach(c => c.classList.toggle('active', c.dataset.theme === state.fontTheme));
+    renderDateFields();
+    renderCourseList();
+    applyFontTheme();
+    render();
+    showToast('已載入園所範本,只要填本週內容即可');
+  } catch (e) {
+    showToast('載入失敗', 'error');
+  }
+}
+
+function hasTemplate() {
+  return !!localStorage.getItem(TEMPLATE_KEY);
+}
+
+// 匯出範本(下載 JSON 檔,可分享給其他老師)
+function exportTemplate() {
+  if (state.courses.length === 0) {
+    showToast('請先填好內容再匯出', 'error');
+    return;
+  }
+  const snapshot = JSON.parse(JSON.stringify(state));
+  snapshot.photos = [];
+  snapshot.courses = snapshot.courses.map(c => ({ ...c, photo: null, body: '' })); // 不含具體內容
+  snapshot._exportedAt = new Date().toISOString();
+  snapshot._version = 'curriculum_template_v1';
+
+  const json = JSON.stringify(snapshot, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  const filename = `${(state.school || '園所').replace(/\s/g,'')}_範本_${new Date().toISOString().slice(0,10)}.json`;
+  link.download = filename;
+  link.href = url;
+  link.click();
+  URL.revokeObjectURL(url);
+  showToast('範本已匯出,可分享給其他老師 ✓');
+}
+
+// 匯出本週原稿(下載 JSON 檔,含完整內容,給老師之後接續編輯用)
+function exportDraft() {
+  if (state.courses.length === 0) {
+    showToast('請先填好內容再匯出', 'error');
+    return;
+  }
+  // 完整快照,包含所有狀態
+  const snapshot = {
+    // 基本資訊
+    school: state.school || '',
+    className: state.className || '',
+    schoolYear: state.schoolYear || '',
+    semester: state.semester || '',
+    logo: state.logo || null,
+    // 顯示設定
+    fontTheme: state.fontTheme || 'elegant',
+    showEn: state.showEn !== false,
+    showAcademic: state.showAcademic !== false,
+    layoutMode: state.layoutMode || 'auto',
+    // 主題與日期
+    theme: state.theme || '',
+    specialNote: state.specialNote || '',
+    weekNum: state.weekNum || '',
+    dateMode: state.dateMode || 'weekly',
+    date1Start: state.date1Start || '',
+    date1End: state.date1End || '',
+    date2Start: state.date2Start || '',
+    date2End: state.date2End || '',
+    customLabel: state.customLabel || '',
+    customText: state.customText || '',
+    // 課程(包含所有內容、英文副標、照片焦點。照片本身不存以免檔案太大)
+    courses: state.courses.map(c => ({
+      title: c.title || '',
+      body: c.body || '',
+      customEn: c.customEn,
+      photoFocus: c.photoFocus
+    })),
+    // 不存照片(太大)
+    photoEnabled: state.photoEnabled || false,
+    photos: [],
+    // 標記
+    _exportedAt: new Date().toISOString(),
+    _version: 'curriculum_draft_v1',
+  };
+
+  const json = JSON.stringify(snapshot, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  // 檔名:主題_週次_日期
+  const themePart = (state.theme || '課程表').replace(/\s/g,'').slice(0, 14);
+  const weekPart = state.weekNum ? `_第${state.weekNum}週` : '';
+  const datePart = state.date1Start ? `_${state.date1Start.replace(/\//g,'-')}` : '';
+  const filename = `${themePart}${weekPart}${datePart}.json`;
+  link.download = filename;
+  link.href = url;
+  link.click();
+  URL.revokeObjectURL(url);
+  showToast('原稿已存,以後可匯入繼續編輯 ✓');
+  return true;
+}
+
+// 靜音版本的存稿(下載 PDF 時自動帶一份)
+function exportDraftSilent() {
+  if (state.courses.length === 0) return;
+  const snapshot = {
+    school: state.school || '',
+    className: state.className || '',
+    schoolYear: state.schoolYear || '',
+    semester: state.semester || '',
+    logo: state.logo || null,
+    fontTheme: state.fontTheme || 'elegant',
+    showEn: state.showEn !== false,
+    showAcademic: state.showAcademic !== false,
+    layoutMode: state.layoutMode || 'auto',
+    theme: state.theme || '',
+    specialNote: state.specialNote || '',
+    weekNum: state.weekNum || '',
+    dateMode: state.dateMode || 'weekly',
+    date1Start: state.date1Start || '',
+    date1End: state.date1End || '',
+    date2Start: state.date2Start || '',
+    date2End: state.date2End || '',
+    customLabel: state.customLabel || '',
+    customText: state.customText || '',
+    courses: state.courses.map(c => ({
+      title: c.title || '',
+      body: c.body || '',
+      customEn: c.customEn,
+      photoFocus: c.photoFocus
+    })),
+    photoEnabled: state.photoEnabled || false,
+    photos: [],
+    _exportedAt: new Date().toISOString(),
+    _version: 'curriculum_draft_v1',
+  };
+  const json = JSON.stringify(snapshot, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  const themePart = (state.theme || '課程表').replace(/\s/g,'').slice(0, 14);
+  const weekPart = state.weekNum ? `_第${state.weekNum}週` : '';
+  const datePart = state.date1Start ? `_${state.date1Start.replace(/\//g,'-')}` : '';
+  const filename = `${themePart}${weekPart}${datePart}.json`;
+  link.download = filename;
+  link.href = url;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+// 匯入範本或原稿(自動辨識檔案類型)
+function importTemplate() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'application/json,.json';
+  input.onchange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const snap = JSON.parse(ev.target.result);
+        const isDraft = snap._version === 'curriculum_draft_v1';
+        const isTemplate = snap._version === 'curriculum_template_v1';
+        if (!isDraft && !isTemplate) {
+          showToast('檔案格式不正確', 'error');
+          return;
+        }
+
+        const typeName = isDraft ? '原稿' : '範本';
+        const willOverwrite = isDraft
+          ? `會載入完整的內容(主題、日期、各欄位文字),覆蓋目前正在編輯的所有資料。`
+          : `會覆蓋目前的學校、班級、課程結構等設定,但內容(body)會清空讓你重填。`;
+        if (!confirm(`要載入這份「${typeName}」嗎?\n\n${willOverwrite}`)) return;
+
+        // 套用基本資訊
+        state.school = snap.school !== undefined ? snap.school : state.school;
+        state.className = snap.className !== undefined ? snap.className : state.className;
+        state.schoolYear = snap.schoolYear !== undefined ? snap.schoolYear : state.schoolYear;
+        state.semester = snap.semester !== undefined ? snap.semester : state.semester;
+        state.fontTheme = snap.fontTheme || state.fontTheme;
+        state.showEn = snap.showEn !== undefined ? snap.showEn : state.showEn;
+        state.showAcademic = snap.showAcademic !== undefined ? snap.showAcademic : state.showAcademic;
+        state.layoutMode = snap.layoutMode || state.layoutMode;
+        state.logo = snap.logo || state.logo;
+
+        if (isDraft) {
+          // 原稿:全部套用包含本週內容
+          state.theme = snap.theme || '';
+          state.specialNote = snap.specialNote || '';
+          state.weekNum = snap.weekNum || '';
+          state.dateMode = snap.dateMode || 'weekly';
+          state.date1Start = snap.date1Start || '';
+          state.date1End = snap.date1End || '';
+          state.date2Start = snap.date2Start || '';
+          state.date2End = snap.date2End || '';
+          state.customLabel = snap.customLabel || '';
+          state.customText = snap.customText || '';
+          state.courses = (snap.courses || []).map(c => ({
+            id: ++courseIdSeq,
+            title: c.title,
+            body: c.body || '',
+            customEn: c.customEn,
+            photoFocus: c.photoFocus,
+            photo: null  // 照片不存
+          }));
+        } else {
+          // 範本:結構替換,內容清空
+          state.theme = '';
+          state.specialNote = '';
+          state.weekNum = '';
+          state.date1Start = '';
+          state.date1End = '';
+          state.courses = (snap.courses || []).map(c => ({
+            id: ++courseIdSeq,
+            title: c.title,
+            body: '',
+            customEn: c.customEn,
+            photo: null
+          }));
+        }
+        normalizeCourses();
+
+        // 寫回 form
+        document.getElementById('school').value = state.school || '';
+        document.getElementById('className').value = state.className || '';
+        document.getElementById('schoolYear').value = state.schoolYear || '';
+        document.getElementById('semester').value = state.semester || '';
+        document.getElementById('theme').value = state.theme || '';
+        document.getElementById('specialNote').value = state.specialNote || '';
+        document.querySelectorAll('#fontPicker .font-card').forEach(c => c.classList.toggle('active', c.dataset.theme === state.fontTheme));
+        document.getElementById('showEnToggle').checked = state.showEn !== false;
+        document.getElementById('showAcademicToggle').checked = state.showAcademic !== false;
+        document.querySelectorAll('#layoutTabs button').forEach(b => b.classList.toggle('active', b.dataset.mode === state.layoutMode));
+        document.querySelectorAll('#dateModeTabs button').forEach(b => b.classList.toggle('active', b.dataset.mode === state.dateMode));
+        updateLogoPreview();
+        renderDateFields();
+        renderCourseList();
+        applyFontTheme();
+        render();
+
+        // 範本同步存到本機;原稿不存(避免覆蓋老師其他正在編輯的內容)
+        if (isTemplate) {
+          localStorage.setItem(TEMPLATE_KEY, JSON.stringify(snap));
+          showToast('範本已匯入並儲存到本機 ✓');
+        } else {
+          showToast('原稿已載入,可繼續編輯 ✓');
+        }
+      } catch (e) {
+        showToast('檔案讀取失敗', 'error');
+        console.error(e);
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+// 歷史紀錄 Modal
+function openHistoryModal() {
+  const history = getHistory();
+  const list = document.getElementById('historyList');
+  if (history.length === 0) {
+    list.innerHTML = '<div class="history-empty">— 尚無歷史紀錄 —<br><small>下載過 PDF/圖片後會自動保存到這裡</small></div>';
+  } else {
+    list.innerHTML = history.map((h, i) => {
+      const d = h._savedAt ? new Date(h._savedAt) : null;
+      const dateStr = d ? `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}` : '';
+      const courseTitles = (h.courses || []).map(c => c.title).join('、');
+      return `
+        <div class="history-item" onclick="loadFromHistory(${i})">
+          <div class="h-title">${escHtml(h._label || '未命名')}</div>
+          <div class="h-meta">
+            <span>儲存於 ${dateStr}</span>
+            <span>${(h.courses || []).length} 個欄位</span>
+          </div>
+          ${courseTitles ? `<div class="h-courses">含:${escHtml(courseTitles)}</div>` : ''}
+        </div>`;
+    }).join('');
+  }
+  document.getElementById('historyModal').classList.add('show');
+}
+
+function closeHistoryModal() {
+  document.getElementById('historyModal').classList.remove('show');
+}
+
+function openHelp() {
+  renderHelp(); // 每次打開都重新渲染,確保跟 UI 同步
+  document.getElementById('helpModal').classList.add('show');
+}
+function closeHelp() { document.getElementById('helpModal').classList.remove('show'); }
+
+// 按鈕標籤(教學文字會引用,確保按鈕改名時教學跟著改)
+const BTN_LABELS = {
+  templateClassic: '📋 範本',
+  importTemplate: '📥 匯入舊檔',
+  clear: '🗑 清空',
+  copyImage: '📲 複製圖片到 LINE',
+  print: '🖨 列印',
+  downloadPNG: '下載圖片',
+  downloadPDF: '下載 PDF',
+  help: '❓ 使用教學',
+  changelog: '📌 更新項目',
+};
+
+function renderHelp() {
+  const body = document.getElementById('helpBody');
+  if (!body) return;
+  body.innerHTML = `
+    <!-- 主流程 -->
+    <div class="help-steps">
+      <div class="hs-row">
+        <div class="hs-num">1</div>
+        <div class="hs-text">
+          <b>第一次來,點「${BTN_LABELS.templateClassic}」</b>
+          <p>馬上載入一份完整範例,看一看就懂格式</p>
+        </div>
+      </div>
+      <div class="hs-row">
+        <div class="hs-num">2</div>
+        <div class="hs-text">
+          <b>頂部兩個分頁:「✏️ 編輯內容」、「👁 預覽 / 下載」</b>
+          <p>進來預設在編輯頁,寫完按頂部的「預覽 / 下載」分頁切過去看完整版</p>
+        </div>
+      </div>
+      <div class="hs-row">
+        <div class="hs-num">3</div>
+        <div class="hs-text">
+          <b>編輯頁:以「列」為單位寫內容</b>
+          <p>每列可以是「整行 / 兩格 / 三格」</p>
+          <p>編輯區底部按 <b>「+ 整行」「+ 兩格」「+ 三格」</b> 新增一列</p>
+          <p>列右上角可隨時切換這列的版面</p>
+        </div>
+      </div>
+      <div class="hs-row">
+        <div class="hs-num">4</div>
+        <div class="hs-text">
+          <b>調整順序</b>
+          <p><b>整列上下移動</b>:抓每列左側的 ⋮⋮ 把手上下拖</p>
+          <p><b>同列左右對調</b>:兩個格子中間會出現金色「⇆」按鈕,點一下就交換</p>
+          <p>(「活動名稱 / 活動目標」固定在最上,不能移動)</p>
+        </div>
+      </div>
+      <div class="hs-row">
+        <div class="hs-num">5</div>
+        <div class="hs-text">
+          <b>預覽頁:傳給家長</b>
+          <p>切到「👁 預覽 / 下載」分頁,右上會顯示輸出按鈕</p>
+          <p>「${BTN_LABELS.copyImage}」→ 貼到 LINE → <b>選「原圖」</b>送出</p>
+        </div>
+      </div>
+      <div class="hs-row">
+        <div class="hs-num">6</div>
+        <div class="hs-text">
+          <b>存檔(很重要!)</b>
+          <p>按「${BTN_LABELS.downloadPDF}」會<b>同時下載兩個檔案</b>:</p>
+          <p>📄 <b>PDF 檔</b> → 給家長 / 自己留底</p>
+          <p>💼 <b>JSON 檔</b> → 以後要修改時用「${BTN_LABELS.importTemplate}」載入</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 最重要提醒 -->
+    <div class="help-note" style="background:#FFEEEE; border:2px solid #C77; padding:14px 16px;">
+      <b style="color:#A13030; font-size:14.5px;">🚨 千萬要記住!做完一定要按「${BTN_LABELS.downloadPDF}」</b>
+      <p style="margin:8px 0 6px; color:#5A2020; line-height:1.8;">
+        系統雖然會記住你的內容,但只要遇到下列情況,辛苦做的內容就會<b>消失</b>:
+      </p>
+      <ul style="margin:0 0 6px 22px; color:#5A2020; line-height:1.7;">
+        <li>清除瀏覽器資料 / 換到其他電腦</li>
+        <li>多位老師共用電腦時,別人覆蓋了你的內容</li>
+        <li>更新瀏覽器、重灌系統</li>
+      </ul>
+      <p style="margin:6px 0 0; color:#5A2020; line-height:1.8;">
+        按「${BTN_LABELS.downloadPDF}」會<b>同時下載 PDF + JSON 原稿</b>,把 JSON 存到 LINE Keep / Google Drive,
+        以後就用「${BTN_LABELS.importTemplate}」載回繼續編輯,不必重做。
+      </p>
+    </div>
+
+    <!-- A4 警告說明 -->
+    <div class="help-note" style="background:#FFF8E6; border:1.5px solid #D4A050; padding:12px 14px; margin-top:10px;">
+      <b style="color:#8B6020;">⚠ 內容過多時系統會提醒</b>
+      <p style="margin:6px 0 0; color:#6A4818; line-height:1.7; font-size:12.5px;">
+        若內容超過 A4 紙張大小,按下載/列印/複製時會跳出警告,告訴你超出多少、要怎麼調整(刪減文字、把整行改成兩格、關閉英文副標等),避免列印或拍照時被切掉。
+      </p>
+    </div>
+
+    <!-- 常見問題 -->
+    <div class="help-tricks">
+      <h4>常見問題</h4>
+      <div class="trick"><b>找不到下載按鈕?</b> 切到「👁 預覽 / 下載」分頁,按鈕在頂部右側才會出現</div>
+      <div class="trick"><b>新增一列</b> = 編輯頁底部按「+ 整行 / + 兩格 / + 三格」(看小圖示就知道版面長相)</div>
+      <div class="trick"><b>切換列的版面</b> = 點該列右上角的「整行 / 兩格 / 三格」按鈕,只影響這列,不會亂動其他列</div>
+      <div class="trick"><b>調整列的順序</b> = 抓列左側的 ⋮⋮ 把手上下拖,金線會顯示要插入的位置(固定列除外)</div>
+      <div class="trick"><b>同列左右對調</b> = 兩個格子中間會出現金色「⇆」按鈕,點一下就交換位置</div>
+      <div class="trick"><b>刪除一列</b> = 列右上角的 ✕ 按鈕,有內容會先跳確認</div>
+      <div class="trick"><b>從多格切到少格?</b> 如有內容,會跳對話框讓你勾選要保留哪幾格,不會誤刪</div>
+      <div class="trick"><b>刪除單一欄位</b> = 滑鼠移到該欄位卡片上,右上角會浮現 ✕ 按鈕</div>
+      <div class="trick"><b>內容超出 A4 怎麼辦?</b> 跳警告後按「先去修改」,試著減文字 / 把整行改成兩格三格 / 關英文副標</div>
+      <div class="trick"><b>不要英文副標</b> = 顯示選項取消勾選</div>
+      <div class="trick"><b>欄位太多?</b> 顯示選項 → 切「雙欄」</div>
+      <div class="trick"><b>家長看不清楚?</b> 傳 LINE 一定要選「原圖」</div>
+      <div class="trick"><b>本週特別提醒</b> 可寫多個事項,按 Enter 換行就好</div>
+      <div class="trick"><b>標點符號</b> 系統會自動把 「,」「.」變成大的全形,日期/時間/編號不變</div>
+      <div class="trick"><b>整個園所要共用同一份範本?</b> 園長做好一份,按「下載 PDF」會自動下載 JSON 檔,把 JSON 寄給每位老師,他們按「${BTN_LABELS.importTemplate}」載入即可</div>
+      ${isMobileDevice() ? `<div class="trick" style="background:#FFF6E8"><b>📱 手機版</b> = 適合查看,認真編輯用電腦比較順手</div>` : ''}
+    </div>
+  `;
+}
+
+// 判斷是否為手機裝置
+function isMobileDevice() {
+  return window.matchMedia('(max-width: 768px)').matches;
+}
+// =============================================================
+// 更新項目資料(維護方便:加新版本只要在陣列最前面 unshift 一筆)
+// 每筆: { date, isLatest?, items: [...白話描述] }
+// =============================================================
+const CHANGELOG = [
+  {
+    date: '2026 / 05 / 15',
+    isLatest: true,
+    items: [
+      '<b>預覽紙更省空間</b>:主題標題上下橫線間距縮窄、欄位卡片內距收緊、行距優化,整體可多放 1-2 列內容,A4 不易超出',
+      '<b>整行內文真正置中</b>:不論文字長短,內文方塊永遠位於格子視覺中央(改用 inline-block 置中)',
+      '<b>改為兩頁式架構:「編輯內容」與「預覽 / 下載」分頁</b>。頂部有大切換按鈕,編輯時整個畫面都是編輯區,預覽時整個畫面都是預覽紙,操作空間大幅放大,卡片不再擁擠破圖',
+      '<b>下載按鈕群移到預覽頁</b>:讓老師「先審閱再導出」,順序更直覺;預覽頁右上才看得到「複製到 LINE / 下載 PDF / 列印」等按鈕',
+      '<b>修正破圖問題</b>:課程列在某些瀏覽器會把版面撐爆,已加上 min-width: 0 解決 grid item 被內容撐開的經典問題',
+      '<b>新增「同列左右交換」</b>:兩個格子中間會浮現一個金色「⇆」按鈕,點一下就互換位置(不用再剪下貼上)',
+      '<b>A4 溢出偵測</b>:按「下載 PDF / 列印 / 下載圖片 / 複製到 LINE」前自動檢查,內容超過 A4 會跳警告,提示具體修改方向(刪減文字、改窄欄位、關英文副標等),避免列印時被切掉',
+      '<b>強力備份提醒</b>:複製圖片到 LINE 後,如果這 session 還沒下載過 PDF,會跳醒目對話框提醒「務必下載 PDF 備份原稿」,避免換電腦/清快取造成資料遺失',
+      '<b>編輯區大改版:改為「以列為單位」(Row-based)</b>。每一列代表預覽紙上的一行,列裡可有 1/2/3 個欄位',
+      '<b>切換版面更直覺</b>:每列右上角的「整行 / 兩格 / 三格」按鈕只影響「該列」,不會牽動其他列,告別「左右亂跑」',
+      '<b>拖曳改在編輯區進行</b>:抓每列左側的 ⋮⋮ 把手上下拖移整列,預覽紙不再可拖,所見即所得',
+      '<b>新增列按鈕</b>:編輯區底部的「+ 整行 / + 兩格 / + 三格」直接加一整列,有版面圖示一看就懂',
+      '<b>切寬度會丟內容時跳對話框</b>:讓老師勾選要「保留」哪幾格(原本預設刪右邊,容易誤刪;現在自己選)',
+      '<b>每張卡片標題置中、內文左右等距留白</b>,視覺平衡又整齊;多行 1.2.3 條列會自動切齊左邊',
+      '<b>刪除欄位的 ✕ 改成精緻圓形圖示</b>,平常隱藏,hover 卡片才浮現於右上角,不再像破圖',
+      '<b>每列頂部顯示列號</b>(①②③...),預覽紙與編輯區一一對應好對照',
+      '<b>修正:某些瀏覽器內 confirm() 對話框被擋導致「按鈕沒反應」的問題</b>,改用自訂對話框,任何環境都能正常使用'
+    ]
+  },
+  {
+    date: '2026 / 05 / 14',
+    items: [
+      '寬度選擇:每個欄位可選「整行 / 兩格 / 三格」,系統自動排版',
+      '寬度按鈕順序:「整行 / 兩格 / 三格」,大到小直覺',
+      '三格並排時,主題標題與內文都置中,視覺對稱優雅',
+      '標點符號自動變全形(逗號變「,」、句號變「.」),日期/時間/編號保留半形',
+      '本週特別提醒可寫多事項,Enter 換行就好,自動排成多欄',
+      '特別提醒位置改到頁尾,不再卡在主題下方',
+      '「活動名稱」「活動目標」鎖定為前兩格,不可移動或刪除',
+      '移除「加照片到課程欄位」功能(維持簡潔)',
+      '頁首字體階層:校名最大、學期年度清楚、主題課程學習表加粗',
+      '南投縣私立小太陽幼兒園(完整校名)'
+    ]
+  },
+  {
+    date: '2026 / 05 / 13',
+    items: [
+      '字體統一規格,所有老師輸出整齊劃一',
+      '新增「本週特別提醒」欄位',
+      '下載 PDF 同時下載 JSON 原稿(老師備份用)',
+      '按鈕從 7 顆簡化為 3 顆(範本 / 匯入舊檔 / 清空)',
+      '字數過多時跳橘色警告'
+    ]
+  },
+  {
+    date: '2026 / 05 / 12',
+    items: [
+      '支援手機版自動排版',
+      '下載 PDF 改用向量文字(可選取、放大不糊)',
+      '下載圖片解析度提升 3 倍(LINE 上更清楚)',
+      'Logo 跟學校名水平置中對齊'
+    ]
+  },
+  {
+    date: '2026 / 05 / 11',
+    items: [
+      '欄位數多時自動切雙欄版面',
+      '照片改 4:3 比例,可調顯示位置(上/中/下)',
+      '新增「使用教學」與「更新項目」按鈕'
+    ]
+  },
+  {
+    date: '2026 / 05 / 10',
+    items: [
+      '每個課程可獨立加照片',
+      '英文副標可手動修改(預設教育部標準翻譯)',
+      '自動記住上次內容',
+      '歷史紀錄保留最近 8 次',
+      '新增「園所範本」(園長設定、老師套用)'
+    ]
+  },
+  {
+    date: '2026 / 05 / 08',
+    items: [
+      '加入學年度與學期欄位',
+      '新增幼幼班八項範本(一鍵套用)'
+    ]
+  },
+  {
+    date: '2026 / 05 / 07',
+    items: ['初版上線']
+  }
+];
+
+function renderChangelog() {
+  const body = document.getElementById('changelogBody');
+  if (!body) return;
+  body.innerHTML = CHANGELOG.map(entry => `
+    <div class="changelog-entry">
+      <div class="changelog-date">${entry.date}</div>
+      ${entry.isLatest ? '<div class="changelog-tag">最新</div>' : ''}
+      <ul class="changelog-list">
+        ${entry.items.map(item => `<li>${item}</li>`).join('')}
+      </ul>
+    </div>
+  `).join('');
+}
+
+function openChangelog() {
+  renderChangelog(); // 每次開啟都重新渲染,確保是最新資料
+  document.getElementById('changelogModal').classList.add('show');
+}
+function closeChangelog() { document.getElementById('changelogModal').classList.remove('show'); }
+
+// =============================================================
+// 字型主題切換
+// =============================================================
+function applyFontTheme() {
+  const paper = document.getElementById('paper');
+  paper.classList.remove('theme-elegant', 'theme-modern', 'theme-wenkai', 'theme-huninn', 'theme-mincho');
+  paper.classList.add(`theme-${state.fontTheme}`);
+}
+
+function updateLogoPreview() {
+  const preview = document.getElementById('logoPreview');
+  const removeBtn = document.getElementById('logoRemoveBtn');
+  if (state.logo) {
+    preview.innerHTML = `<img src="${state.logo}" alt="logo">`;
+    removeBtn.style.display = 'inline-flex';
+  } else {
+    preview.innerHTML = '<span class="logo-placeholder">LOGO</span>';
+    removeBtn.style.display = 'none';
+  }
+}
+
+function removeLogo() {
+  if (!confirm('確定要移除 Logo 嗎?')) return;
+  state.logo = null;
+  updateLogoPreview();
+  render();
+  showToast('Logo 已移除');
+}
+
+// =============================================================
+// 渲染預覽紙
+// =============================================================
+function render() {
+  saveToStorage(); // 每次 render 都自動儲存(防抖)
+  const paper = document.getElementById('paper');
+  const showEn = state.showEn !== false;
+
+  // 1) 主題與日期區
+  let metaRows = '';
+  if (state.dateMode === 'weekly') {
+    if (state.weekNum) metaRows += `<div class="meta-row"><span class="label">週次</span><span class="value">${escHtml(state.weekNum)}</span></div>`;
+    if (state.date1Start || state.date1End) {
+      const range = state.date1Start && state.date1End
+        ? `${escHtml(state.date1Start)} <span class="date-sep">-</span> ${escHtml(state.date1End)}`
+        : escHtml(state.date1Start || state.date1End);
+      metaRows += `<div class="meta-row"><span class="label">日期</span><span class="value">${range}</span></div>`;
+    }
+  } else if (state.dateMode === 'biweekly') {
+    if (state.weekNum) metaRows += `<div class="meta-row"><span class="label">週次</span><span class="value">${escHtml(state.weekNum)}</span></div>`;
+    if (state.date1Start || state.date1End) {
+      const r1 = state.date1Start && state.date1End
+        ? `${escHtml(state.date1Start)} <span class="date-sep">-</span> ${escHtml(state.date1End)}`
+        : escHtml(state.date1Start || state.date1End);
+      metaRows += `<div class="meta-row"><span class="label">第一週</span><span class="value">${r1}</span></div>`;
+    }
+    if (state.date2Start || state.date2End) {
+      const r2 = state.date2Start && state.date2End
+        ? `${escHtml(state.date2Start)} <span class="date-sep">-</span> ${escHtml(state.date2End)}`
+        : escHtml(state.date2Start || state.date2End);
+      metaRows += `<div class="meta-row"><span class="label">第二週</span><span class="value">${r2}</span></div>`;
+    }
+  } else if (state.dateMode === 'custom') {
+    if (state.customText) {
+      metaRows += `<div class="meta-row"><span class="label">${escHtml(state.customLabel||'日期')}</span><span class="value">${escHtml(state.customText)}</span></div>`;
+    }
+  }
+
+  const themeZone = `
+    <div class="theme-zone">
+      <div class="theme-main">
+        ${showEn ? `<div class="theme-label">Weekly Theme</div>` : ''}
+        <div class="theme-text">${escHtmlFull(state.theme || '─ ─ ─')}</div>
+      </div>
+      ${metaRows ? `<div class="meta-side">${metaRows}</div>` : ''}
+    </div>`;
+
+  // 2) 課程表格
+  const rowsHtml = state.courses.map((c, i) => {
+    const en = showEn ? (c.customEn !== undefined ? c.customEn : getEn(c.title)) : '';
+    const focusPos = c.photoFocus || 'center';
+    const photoHtml = c.photo
+      ? `<div class="row-photo"><img src="${c.photo}" style="object-position: center ${focusPos}" alt=""></div>`
+      : '';
+    const locked = isLockedIndex(i);
+    const draggable = !locked;
+    const bodyEmpty = !c.body || !c.body.trim();
+    return `
+      <tr class="${locked ? 'row-locked' : 'row-draggable'}"
+          data-cid="${c.id}">
+        <td class="label-cell">
+          <span class="label-text">${escHtmlFull(c.title)}</span>
+          ${en ? `<span class="label-en">${escHtml(en)}</span>` : ''}
+        </td>
+        <td class="body-cell ${bodyEmpty ? 'empty' : ''} ${c.photo ? 'has-photo' : ''}">
+          ${photoHtml}
+          <div class="body-text">${bodyEmpty ? '— 尚未填寫 —' : escHtmlFull(c.body)}</div>
+        </td>
+      </tr>`;
+  }).join('');
+
+  // 決定版面:auto 模式下 >= 7 個欄位自動切雙欄
+  let useTwoCol = false;
+  if (state.layoutMode === 'two-column') useTwoCol = true;
+  else if (state.layoutMode === 'auto' && state.courses.length >= 7) useTwoCol = true;
+
+  // 雙欄版面:用 CSS Grid 讓左右對齊
+  let tableHtml = '';
+  if (state.courses.length === 0) {
+    tableHtml = '<div style="text-align:center;color:var(--ink-faint);font-style:italic;font-family:Cormorant Garamond;font-size:14px;letter-spacing:2px;padding:60px 0;">— No content yet —</div>';
+  } else if (useTwoCol) {
+    // 第一行固定:活動名稱(左) + 活動目標(右),永遠 1+1 並排
+    const lockedRow = {
+      left: state.courses[0],
+      right: state.courses[1] || null
+    };
+    // 剩餘欄位:用智慧排版演算法,依字數決定 1/2/3 格一行
+    const rest = state.courses.slice(LOCKED_COUNT);
+    const rows = smartLayout(rest);
+    tableHtml = `
+      <div class="two-col-grid">
+        <div class="grid-row">
+          ${renderPaperCell(lockedRow.left, showEn, 'locked')}
+          ${lockedRow.right ? renderPaperCell(lockedRow.right, showEn, 'locked') : '<div class="grid-cell"></div>'}
+        </div>
+        ${rows.map(row => {
+          // 新版:row.cells 是 [{item, units}, ...],用 6 單位 grid 渲染
+          const isSingle = row.cells.length === 1;
+          const isTriple = row.cells.length >= 3;
+          const rowClass = isSingle ? 'units-row solo-row'
+                         : isTriple ? 'units-row triple-row'
+                         : 'units-row';
+          return `
+            <div class="grid-row ${rowClass}">
+              ${row.cells.map(cell => {
+                const variantHint = isSingle ? 'solo' : '';
+                return renderPaperCellUnits(cell.item, showEn, cell.units, variantHint);
+              }).join('')}
+            </div>`;
+        }).join('')}
+      </div>`;
+  } else {
+    tableHtml = `<table class="course-table">${rowsHtml}</table>`;
+  }
+
+  // 3) 照片區
+  let photoHtml = '';
+  if (state.photoEnabled && state.photos.length > 0) {
+    const n = state.photos.length;
+    photoHtml = `
+      <div class="photo-zone">
+        <div class="photo-zone-title">
+          ${showEn ? `<span class="en">Glimpses of Learning</span>` : ''}
+          <span class="zh">學習剪影</span>
+        </div>
+        <div class="photo-grid n${n}">
+          ${state.photos.map(p => `<div class="photo-cell"><img src="${p.dataUrl}"></div>`).join('')}
+        </div>
+      </div>`;
+  }
+
+  paper.innerHTML = `
+    <div class="doc-header">
+      ${showEn ? `<div class="subtitle-en">CURRICULUM JOURNAL</div>` : ''}
+      <div class="school-line">
+        ${state.logo ? `<div class="paper-logo-inline"><img src="${state.logo}" alt=""></div>` : '<span class="ornament"></span>'}
+        <span class="school-name">${escHtml(state.school || '○○幼兒園')}</span>
+        <span class="ornament"></span>
+      </div>
+      ${state.showAcademic !== false && (state.schoolYear || state.semester) ? `
+        <div class="academic-line">${escHtml(state.schoolYear || '')}${state.schoolYear ? '學年度' : ''}　${escHtml(state.semester || '')}</div>
+      ` : ''}
+      <div class="doc-title">${state.className ? escHtml(state.className) + '　' : ''}主題課程學習表</div>
+    </div>
+
+    ${themeZone}
+
+    ${tableHtml}
+
+    ${photoHtml}
+
+    ${(() => {
+      if (!state.specialNote) return '';
+      const items = state.specialNote.split('\n').map(s => s.trim()).filter(Boolean);
+      if (items.length === 0) return '';
+      const itemsHtml = items.length === 1
+        ? `<div class="special-note-text"><span class="special-note-icon">📌</span>${escHtmlFull(items[0])}</div>`
+        : `<ul class="special-note-list">${items.map(it => `<li><span class="special-note-icon">📌</span>${escHtmlFull(it)}</li>`).join('')}</ul>`;
+      return `
+        <div class="special-note-zone">
+          <div class="special-note-label">${showEn ? 'Special Notice  ' : ''}本週特別提醒</div>
+          ${itemsHtml}
+        </div>`;
+    })()}
+
+    <div class="doc-footer">
+      <div class="ornament">
+        <span class="dot outer"></span>
+        <span class="dot"></span>
+        <span class="dot outer"></span>
+      </div>
+      <div>${escHtml(state.school || '')} · ${getDateString()}</div>
+      <div class="ornament">
+        <span class="dot outer"></span>
+        <span class="dot"></span>
+        <span class="dot outer"></span>
+      </div>
+    </div>
+  `;
+}
+
+function getDateString() {
+  if (state.dateMode === 'weekly' && state.date1Start) return state.date1Start;
+  if (state.dateMode === 'biweekly' && state.date1Start) return state.date1Start;
+  if (state.dateMode === 'custom' && state.customText) return state.customText;
+  return '';
+}
+
+// 雙欄版面:渲染一個格子(內容)
+// 預覽紙上的單格 cell 容器(可拖曳,帶 units 寬度)
+function renderPaperCellUnits(c, showEn, units, variantHint) {
+  if (!c) return '<div class="grid-cell"></div>';
+  const draggable = true; // 鎖定格子不會進這個函式
+  const soloClass = variantHint === 'solo' ? 'solo-cell' : '';
+  return `
+    <div class="grid-cell ${soloClass}"
+         data-cid="${c.id}"
+         style="grid-column: span ${units};">
+      ${renderColCell(c, showEn)}
+    </div>`;
+}
+
+// 預覽紙上的單格 cell 容器(可拖曳)
+function renderPaperCell(c, showEn, variant) {
+  if (!c) return '<div class="grid-cell"></div>';
+  const locked = variant === 'locked';
+  const solo = variant === 'solo';
+  const draggable = !locked;
+  return `
+    <div class="grid-cell ${solo ? 'solo-cell' : ''} ${locked ? 'cell-locked' : ''}"
+         data-cid="${c.id}">
+      ${renderColCell(c, showEn)}
+    </div>`;
+}
+
+// =============================================================
+// 智慧排版演算法:依每個欄位的內容多寡,動態決定一行 1/2/3 格
+// =============================================================
+//
+// 核心思路:估算每個欄位在三種寬度下需要多少行(視覺高度),
+// 進而決定該欄位適合什麼版型。
+//
+// 估算方法:
+//   1. 計算每行平均能容納多少字(格寬 ÷ 字寬)
+//   2. 對每個顯式換行做的「自然段落」,看它在該格寬會占多少行(無條件進位)
+//   3. 加總得到該欄位在那種寬度下的「行數」
+//
+// 分級規則(依「pair 寬度」的行數):
+//   - 1 行  → S(短)   可三格並排
+//   - 2-3 行 → M(中)  兩格並排
+//   - 4+ 行  → L(長)  自己整行(避免變太擠)
+//
+// 排列規則(從前往後掃描,順序穩定):
+//   - 遇 L → solo
+//   - 遇 M → 配下一個非 L,湊兩格
+//   - 遇 S → 試湊三短(連續 3 個 S);否則湊兩格
+//   - 最後孤格 → solo
+function smartLayout(items) {
+  if (!items || items.length === 0) return [];
+
+  // 規則:
+  //   - 每個欄位有寬度設定:'half'(½, 預設, 3單位)、'third'(⅓, 2單位)、'full'(整行, 6單位)
+  //   - 一行容量 = 6 單位
+  //   - 由左到右掃描:能塞下就塞,塞滿就換行
+  //   - 一行不滿 6 單位時,自動把最後一格擴大撐滿剩餘空間
+  //   - 不同寬度可以混搭(例:½ + ⅓ 不能恰好湊滿,⅓ 自動撐成 3 單位)
+  const UNITS = { half: 3, third: 2, full: 6 };
+  const ROW_CAP = 6;
+
+  function getWidth(c) {
+    return c.width || 'half';
+  }
+
+  // 每個 row 結構:{ cells: [{ item, units }, ...] }
+  const rows = [];
+  let buf = []; // 當前累積的 { item, units }
+  let used = 0;
+
+  function flushRow() {
+    if (buf.length === 0) return;
+    // 若行未滿,把最後一格擴大撐滿
+    if (used < ROW_CAP) {
+      const remaining = ROW_CAP - used;
+      buf[buf.length - 1].units += remaining;
+    }
+    rows.push({
+      cells: buf.map(b => ({ item: b.item, units: b.units }))
+    });
+    buf = [];
+    used = 0;
+  }
+
+  items.forEach(c => {
+    const w = getWidth(c);
+    const u = UNITS[w];
+    if (used + u > ROW_CAP) {
+      flushRow();
+    }
+    buf.push({ item: c, units: u });
+    used += u;
+    if (used >= ROW_CAP) {
+      flushRow();
+    }
+  });
+  flushRow();
+
+  return rows;
+}
+
+function renderColCell(c, showEn) {
+  if (!c) return '';
+  const en = showEn ? (c.customEn !== undefined ? c.customEn : getEn(c.title)) : '';
+  const focusPos = c.photoFocus || 'center';
+  const photoHtml = c.photo
+    ? `<div class="row-photo-col"><img src="${c.photo}" style="object-position: center ${focusPos}" alt=""></div>`
+    : '';
+  const bodyEmpty = !c.body || !c.body.trim();
+  return `
+    <div class="col-title">
+      <span class="label-text">${escHtmlFull(c.title)}</span>
+      ${en ? `<span class="label-en">${escHtml(en)}</span>` : ''}
+    </div>
+    ${photoHtml}
+    <div class="col-body ${bodyEmpty ? 'empty' : ''}">${bodyEmpty ? '— 尚未填寫 —' : escHtmlFull(c.body)}</div>`;
+}
+
+// =============================================================
+// 縮放
+// =============================================================
+let currentZoom = 0.75;
+// =============================================================
+// 編輯頁 / 預覽頁 切換
+// =============================================================
+function switchView(viewName) {
+  const validViews = ['edit', 'preview'];
+  if (!validViews.includes(viewName)) viewName = 'edit';
+  // 切 view 容器
+  document.querySelectorAll('.view').forEach(v => {
+    v.classList.toggle('active', v.id === `view-${viewName}`);
+  });
+  // 切 tab 樣式
+  document.querySelectorAll('.page-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.view === viewName);
+  });
+  // 下載按鈕群只在預覽頁顯示
+  const outputGroup = document.getElementById('outputGroup');
+  if (outputGroup) {
+    outputGroup.style.display = (viewName === 'preview') ? '' : 'none';
+  }
+  // 切到預覽頁時:重新渲染確保最新、滾到頂、重新計算縮放
+  if (viewName === 'preview') {
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(autoFitZoom, 50);
+  }
+  // 記住偏好(但下次進來預設還是編輯頁)
+  try { sessionStorage.setItem('lastView', viewName); } catch(e) {}
+}
+
+function setZoom(delta) {
+  currentZoom = Math.max(0.3, Math.min(1.2, currentZoom + delta));
+  applyZoom();
+}
+function applyZoom() {
+  const container = document.getElementById('preview-container');
+  container.style.transform = `scale(${currentZoom})`;
+  const zoomVal = document.getElementById('zoomVal');
+  if (zoomVal) zoomVal.textContent = Math.round(currentZoom * 100) + '%';
+  container.style.marginBottom = (container.offsetHeight * (currentZoom - 1)) + 'px';
+}
+
+// 自動依視窗寬度設定預設縮放
+function autoFitZoom() {
+  const paper = document.getElementById('paper');
+  if (!paper) return;
+  // 在預覽頁時用視窗寬度;在編輯頁不需要(預覽紙是隱藏的)
+  const previewView = document.getElementById('view-preview');
+  if (!previewView || !previewView.classList.contains('active')) return;
+  const availableW = window.innerWidth - 40; // 預留兩側 padding
+  const paperW = 794;
+  // 計算縮放:小於原尺寸時縮小;大於原尺寸時也適度放大讓老師看得清楚(最多 1.4 倍)
+  let zoom;
+  if (availableW < paperW) {
+    zoom = Math.max(0.3, availableW / paperW);
+  } else {
+    // 視窗夠大,適度放大但有上限
+    zoom = Math.min(1.4, availableW / paperW * 0.95);
+  }
+  currentZoom = zoom;
+  applyZoom();
+}
+
+// 視窗大小改變時自動重算(預覽頁需要)
+window.addEventListener('resize', () => {
+  autoFitZoom();
+});
+
+// =============================================================
+// 範例 / 清空
+// =============================================================
+// 預設範例:三大領域(走進繪本世界)
+const sampleCourses = [
+  { title: '活動名稱', body: '1. 圖書館巡禮\n2. 我的借書證' },
+  { title: '活動目標', body: '1. 認識圖書館的功能與規則\n2. 學習愛護書籍的方法\n3. 培養閱讀興趣與分享習慣' },
+  { title: '身體動作與健康', body: '1. 出汗性大肌肉活動:氣球敲敲樂、水谷式遊具挑戰\n2. 覺察與辨別危險,保護自己的安全\n3. 遵守安全活動的原則\n4. 敏捷使用各種素材、工具或器材\n5. 熟練並維持日常生活的健康行為' },
+  { title: '語文與認知', body: '1. 繪本分享:《森林圖書館》、《茉莉的第一張借書證》、《鱷魚愛上長頸鹿6—媽媽的驚喜之旅》\n2. 律動歌曲:《敲咚咚》\n3. 團體討論:在圖書館需遵守哪些規則?在故事星球閱讀的感覺?\n4. 討論與分享(大班):我的夢想是什麼?為什麼?' },
+  { title: '社會與情緒', body: '1. 辨別生活環境中能做或不能做的事\n2. 知道在圖書館閱讀的禮儀\n3. 在不同場域閱讀須注意的事情\n4. 尊敬長輩、喜愛與感謝家人\n5. 參與感恩親子活動\n6. 學習輪流及排隊的禮儀' }
+];
+
+// 幼幼班八項範本(對應原檔結構,有填好範例內容)
+const classicCourses = [
+  { title: '活動名稱', body: '★紅紅的新年(故事時間-壓歲錢的故事)\n★歡喜來拜年' },
+  { title: '活動目標', body: '1. 認識年節習俗的由來。\n2. 認識年節的應景食物及其吉祥特徵。\n3. 學習吃年夜飯的禮儀。' },
+  { title: '小熊念兒歌', body: '梳梳頭\n小ㄚ頭,梳梳頭,\n長長頭髮烏溜溜。' },
+  { title: '小熊玩蓋印', body: '吹泡泡' },
+  { title: '幼兒美術', body: '我\n材料:粉蠟筆' },
+  { title: '潛能開發', body: '木馬\n組件:綠色大H 黃色大H' },
+  { title: '小熊動手玩', body: '觸覺球' },
+  { title: '台語童謠', body: '指甲花\n番鴨 番鴨,\n挽指甲花擦指甲;\n擦腳盤,擦腳縫,\n歸隻腳,紅紅紅。' },
+  { title: '愛的TOUCH', body: '經由身體肌膚的按摩,刺激觸覺發展。\n認識身體部位名稱。' }
+];
+
+function loadSample(type = 'default') {
+  if (type === 'classic') {
+    document.getElementById('school').value = '南投縣私立小太陽幼兒園';
+    document.getElementById('className').value = '幼幼班';
+    document.getElementById('schoolYear').value = '114';
+    document.getElementById('semester').value = '第二學期';
+    document.getElementById('theme').value = '紅紅的新年';
+    state.school = '南投縣私立小太陽幼兒園';
+    state.className = '幼幼班';
+    state.schoolYear = '114';
+    state.semester = '第二學期';
+    state.theme = '紅紅的新年';
+
+    state.dateMode = 'weekly';
+    document.querySelectorAll('#dateModeTabs button').forEach(b => b.classList.toggle('active', b.dataset.mode === 'weekly'));
+    state.weekNum = '第1週';
+    state.date1Start = '115/2/2';
+    state.date1End = '115/2/6';
+    renderDateFields();
+
+    state.courses = [];
+    classicCourses.forEach(s => addCourse({ ...s }));
+    normalizeCourses();
+    renderCourseList();
+    render();
+    showToast('幼幼班八項範本已載入');
+    return;
+  }
+
+  // default
+  document.getElementById('school').value = '南投縣私立小太陽幼兒園';
+  document.getElementById('className').value = '碧海藍天';
+  document.getElementById('schoolYear').value = '114';
+  document.getElementById('semester').value = '第二學期';
+  document.getElementById('theme').value = '走進繪本世界';
+  state.school = '南投縣私立小太陽幼兒園';
+  state.className = '碧海藍天';
+  state.schoolYear = '114';
+  state.semester = '第二學期';
+  state.theme = '走進繪本世界';
+
+  state.dateMode = 'weekly';
+  document.querySelectorAll('#dateModeTabs button').forEach(b => b.classList.toggle('active', b.dataset.mode === 'weekly'));
+  state.weekNum = '13';
+  state.date1Start = '115/05/04';
+  state.date1End = '115/05/08';
+  renderDateFields();
+
+  state.courses = [];
+  sampleCourses.forEach(s => addCourse({ ...s }));
+  normalizeCourses();
+  renderCourseList();
+  render();
+  showToast('範例已載入');
+}
+
+function clearAll() {
+  if (!confirm('確定要清空所有課程內容?(「活動名稱」「活動目標」兩個固定欄位會保留但內容清空)')) return;
+  state.theme = '';
+  state.weekNum = state.date1Start = state.date1End = '';
+  state.date2Start = state.date2End = state.customText = '';
+  state.photos = [];
+  state.courses = [];
+  normalizeCourses(); // 保留前兩格固定欄位
+  document.getElementById('theme').value = '';
+  document.getElementById('photoEnabled').checked = false;
+  state.photoEnabled = false;
+  document.getElementById('photoSection').classList.remove('show');
+  renderDateFields();
+  renderCourseList();
+  renderPhotoList();
+  render();
+  showToast('已清空');
+}
+
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + type + ' show';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.className = 'toast ' + type, 2400);
+}
+
+// =============================================================
+// 下載
+// =============================================================
+async function captureCanvas(scale = 4) {
+  const container = document.getElementById('preview-container');
+  const oldT = container.style.transform;
+  const oldM = container.style.marginBottom;
+  container.style.transform = 'scale(1)';
+  container.style.marginBottom = '0';
+
+  // 等字型完全載入再截圖(避免字型未載入完成導致模糊)
+  if (document.fonts && document.fonts.ready) {
+    await document.fonts.ready;
+  }
+  await new Promise(r => requestAnimationFrame(r));
+  await new Promise(r => setTimeout(r, 200));  // 多等一下,確保 reflow 完成
+
+  const paper = document.getElementById('paper');
+
+  try {
+    const canvas = await html2canvas(paper, {
+      scale: scale,
+      backgroundColor: '#FBFAF6',
+      useCORS: true,
+      logging: false,
+      allowTaint: true,
+      letterRendering: true,
+      imageTimeout: 0,
+      width: paper.offsetWidth,
+      height: paper.offsetHeight,
+      windowWidth: paper.offsetWidth,
+      windowHeight: paper.offsetHeight,
+      onclone: (clonedDoc, clonedEl) => {
+        const clonedPaper = clonedDoc.getElementById('paper');
+        if (clonedPaper) {
+          // 啟用字型平滑與精確渲染
+          clonedPaper.style.webkitFontSmoothing = 'antialiased';
+          clonedPaper.style.mozOsxFontSmoothing = 'grayscale';
+          clonedPaper.style.textRendering = 'geometricPrecision';
+          // 套用所有子元素的字型平滑
+          clonedPaper.querySelectorAll('*').forEach(el => {
+            el.style.webkitFontSmoothing = 'antialiased';
+            el.style.textRendering = 'geometricPrecision';
+          });
+        }
+      }
+    });
+    return canvas;
+  } finally {
+    container.style.transform = oldT;
+    container.style.marginBottom = oldM;
+  }
+}
+
+// =============================================================
+// 輸出前檢查:A4 溢出偵測 + 「未備份」提醒
+// =============================================================
+
+// A4 = 1123px(高,在 96dpi) ;考量 32px 安全邊界讓內容不會剛好頂到邊
+const A4_HEIGHT_PX = 1123;
+const A4_SOFT_LIMIT = 1100;  // 接近但還沒超出時就提醒
+
+// 暫存「強制繼續輸出」要執行的動作
+let pendingOutputAction = null;
+
+// 偵測預覽紙內容是否超出 A4
+function checkPaperOverflow() {
+  const paper = document.getElementById('paper');
+  if (!paper) return { overflow: false, height: 0 };
+  // 用 scrollHeight 取得實際內容高度(含溢出部分)
+  const h = paper.scrollHeight;
+  return {
+    overflow: h > A4_HEIGHT_PX,
+    nearLimit: h > A4_SOFT_LIMIT && h <= A4_HEIGHT_PX,
+    height: h,
+    percent: Math.round((h / A4_HEIGHT_PX) * 100)
+  };
+}
+
+// 顯示溢出警告 modal,使用者選擇後再執行 action
+function showOverflowWarning(actionLabel, action) {
+  const info = checkPaperOverflow();
+  const detail = document.getElementById('overflowDetail');
+  if (detail) {
+    detail.innerHTML = `目前頁面高度約 <b>${info.percent}%</b>(超過 ${info.percent - 100}%),如直接「${actionLabel}」,A4 紙張會放不下,內容會被切掉或印到第二頁。`;
+  }
+  pendingOutputAction = action;
+  document.getElementById('overflowWarningModal').classList.add('show');
+}
+
+function closeOverflowWarning() {
+  document.getElementById('overflowWarningModal').classList.remove('show');
+  pendingOutputAction = null;
+}
+
+function forceContinueOverflow() {
+  document.getElementById('overflowWarningModal').classList.remove('show');
+  if (typeof pendingOutputAction === 'function') {
+    const fn = pendingOutputAction;
+    pendingOutputAction = null;
+    fn();
+  }
+}
+
+// PDF 備份提醒(複製圖片到 LINE 之後跳)
+function showPdfBackupReminder() {
+  document.getElementById('pdfBackupReminderModal').classList.add('show');
+}
+function closePdfBackupReminder() {
+  document.getElementById('pdfBackupReminderModal').classList.remove('show');
+}
+function downloadPdfFromReminder() {
+  closePdfBackupReminder();
+  // 直接觸發下載 PDF
+  downloadPDF();
+}
+
+// 統一的「輸出守門員」:任何輸出動作都先過這層
+// actionLabel = 動作名稱(顯示給使用者),action = 真正執行的函式
+async function gatedOutput(actionLabel, action) {
+  const info = checkPaperOverflow();
+  if (info.overflow) {
+    showOverflowWarning(actionLabel, action);
+    return;
+  }
+  await action();
+}
+
+async function downloadPNG() {
+  if (state.courses.length === 0) {
+    showToast('請至少新增一個課程欄位', 'error');
+    return;
+  }
+  gatedOutput('下載圖片', _downloadPNG);
+}
+async function _downloadPNG() {
+  showToast('圖片產生中...');
+  try {
+    const canvas = await captureCanvas();
+    const link = document.createElement('a');
+    const filename = `${state.theme || '課程表'}_${state.weekNum || ''}.png`.replace(/\s/g,'');
+    link.download = filename;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    addToHistory();
+    showToast('下載完成');
+  } catch (err) {
+    console.error(err);
+    showToast('產生失敗', 'error');
+  }
+}
+
+async function downloadPDF() {
+  if (state.courses.length === 0) {
+    showToast('請至少新增一個課程欄位', 'error');
+    return;
+  }
+  gatedOutput('下載 PDF', _downloadPDF);
+}
+async function _downloadPDF() {
+  showToast('準備 PDF + 原稿...');
+
+  // 先存原稿(不顯示 toast,順便存)
+  try {
+    exportDraftSilent();
+  } catch(e) { console.warn('原稿存檔失敗', e); }
+
+  // 標記:此 session 已下載過 PDF(用於決定是否還要跳備份提醒)
+  try { sessionStorage.setItem('hasDownloadedPdf', '1'); } catch(e) {}
+
+  // 再下載 PDF
+  let printWin = null;
+  try {
+    printWin = window.open('', '_blank', 'width=900,height=1200');
+  } catch (e) { printWin = null; }
+
+  if (!printWin || !printWin.document) {
+    showToast('使用備用模式產生 PDF...');
+    return downloadPDFFallback();
+  }
+
+  try {
+    const paper = document.getElementById('paper');
+    const paperHtml = paper.outerHTML;
+    const allStyles = Array.from(document.styleSheets)
+      .map(sheet => {
+        try {
+          return Array.from(sheet.cssRules).map(r => r.cssText).join('\n');
+        } catch (e) {
+          return sheet.href ? `@import url("${sheet.href}");` : '';
+        }
+      }).join('\n');
+
+    printWin.document.write(`
+      <!DOCTYPE html>
+      <html lang="zh-Hant">
+      <head>
+        <meta charset="UTF-8">
+        <title>${escHtml(state.theme || '課程表')}_${escHtml(state.weekNum || '')}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Noto+Sans+TC:wght@200;300;400;500;700&family=Noto+Serif+TC:wght@200;300;400;500;600;700&family=Inter:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Caveat:wght@400;500&family=Klee+One:wght@400;600&family=Huninn&family=LXGW+WenKai+TC&family=Zen+Old+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
+        <style>
+          ${allStyles}
+          @page {
+            size: A4 portrait;
+            margin: 0;
+          }
+          html, body {
+            margin: 0;
+            padding: 0;
+            background: #FBFAF6;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+          }
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          .elegant-paper {
+            width: 210mm !important;
+            min-height: 297mm !important;
+            box-shadow: none !important;
+            padding: 14mm 16mm 10mm !important;
+            transform: none !important;
+          }
+          .elegant-paper::before {
+            top: 7mm !important;
+            left: 7mm !important;
+            right: 7mm !important;
+            bottom: 7mm !important;
+          }
+          .paper-logo {
+            top: 12mm !important;
+            left: 12mm !important;
+          }
+          @media print {
+            html, body { background: white; }
+            .elegant-paper { page-break-inside: avoid; }
+          }
+          @media screen {
+            body {
+              display: flex;
+              justify-content: center;
+              padding: 20px 0;
+            }
+          }
+          .print-hint {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 14px 20px;
+            background: #1A1A1A;
+            color: white;
+            text-align: center;
+            font-family: 'Noto Sans TC', sans-serif;
+            font-size: 14px;
+            letter-spacing: 1px;
+            z-index: 1000;
+          }
+          .print-hint button {
+            margin-left: 12px;
+            padding: 6px 16px;
+            background: white;
+            color: #1A1A1A;
+            border: none;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 1px;
+            font-family: 'Noto Sans TC', sans-serif;
+          }
+          @media print {
+            .print-hint { display: none !important; }
+          }
+        </style>
+      </head>
+      <body class="${state.fontTheme ? 'theme-' + state.fontTheme : 'theme-elegant'}">
+        <div class="print-hint">
+          請點 →
+          <button onclick="window.print()">列印 / 儲存為 PDF</button>
+          (列印視窗選「另存為 PDF」)
+        </div>
+        ${paperHtml}
+        <script>
+          document.fonts.ready.then(() => {
+            setTimeout(() => window.print(), 800);
+          });
+        <\/script>
+      </body>
+      </html>
+    `);
+    printWin.document.close();
+    addToHistory();
+    showToast('✓ 原稿已存,PDF 列印視窗已開啟');
+  } catch (err) {
+    console.error('PDF 列印視窗失敗,改用備用模式', err);
+    if (printWin) try { printWin.close(); } catch(e) {}
+    return downloadPDFFallback();
+  }
+}
+
+// 備用 PDF 產生(用 html2canvas + jsPDF,適用 iframe 或彈窗被擋的情境)
+async function downloadPDFFallback() {
+  try {
+    // 先順便存原稿
+    try { exportDraftSilent(); } catch(e) { console.warn('原稿存檔失敗', e); }
+    const canvas = await captureCanvas(4);
+    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+    const ratio = canvas.width / canvas.height;
+    const a4Ratio = pageW / pageH;
+    let drawW, drawH, x, y;
+    if (ratio > a4Ratio) {
+      drawW = pageW; drawH = pageW / ratio; x = 0; y = (pageH - drawH) / 2;
+    } else {
+      drawH = pageH; drawW = pageH * ratio; x = (pageW - drawW) / 2; y = 0;
+    }
+    pdf.addImage(imgData, 'JPEG', x, y, drawW, drawH);
+    const filename = `${state.theme || '課程表'}_${state.weekNum || ''}.pdf`.replace(/\s/g,'');
+    pdf.save(filename);
+    addToHistory();
+    showToast('✓ PDF + 原稿都已下載');
+  } catch (err) {
+    console.error(err);
+    showToast('PDF 產生失敗,請改用「下載圖片」', 'error');
+  }
+}
+
+// 複製圖片到剪貼簿(可貼到 LINE / Word / Email)
+async function copyImage() {
+  if (state.courses.length === 0) {
+    showToast('請至少新增一個課程欄位', 'error');
+    return;
+  }
+  gatedOutput('複製圖片到 LINE', _copyImage);
+}
+async function _copyImage() {
+  showToast('產生高清圖片中...');
+  try {
+    const canvas = await captureCanvas(4);
+    let succeeded = false;
+    let usedFallback = false;
+
+    if (navigator.clipboard && window.ClipboardItem) {
+      try {
+        const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+        await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+        addToHistory();
+        showToast('✓ 已複製高清圖,LINE 傳送時請選「原圖」');
+        succeeded = true;
+      } catch (e) {
+        console.warn('剪貼簿被擋,改用下載模式', e);
+      }
+    }
+
+    if (!succeeded) {
+      const link = document.createElement('a');
+      const filename = `${state.theme || '課程表'}_${state.weekNum || ''}.png`.replace(/\s/g,'');
+      link.download = filename;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      addToHistory();
+      showToast('剪貼簿被擋,已改為直接下載圖片');
+      succeeded = true;
+      usedFallback = true;
+    }
+
+    // 複製成功(或下載成功)後,如此 session 尚未下載過 PDF,跳備份提醒
+    if (succeeded) {
+      const hasPdf = (() => {
+        try { return sessionStorage.getItem('hasDownloadedPdf') === '1'; } catch(e) { return false; }
+      })();
+      if (!hasPdf) {
+        // 稍微延遲讓 toast 先看到
+        setTimeout(() => showPdfBackupReminder(), usedFallback ? 1200 : 800);
+      }
+    }
+  } catch (err) {
+    console.error(err);
+    showToast('產生失敗', 'error');
+  }
+}
+
+// 列印預覽:呼叫瀏覽器原生列印
+async function printPreview() {
+  if (state.courses.length === 0) {
+    showToast('請至少新增一個課程欄位', 'error');
+    return;
+  }
+  gatedOutput('列印', _printPreview);
+}
+async function _printPreview() {
+  showToast('準備列印...');
+
+  // 先試彈出視窗模式
+  let printWin = null;
+  try {
+    printWin = window.open('', '_blank');
+  } catch (e) { printWin = null; }
+
+  if (!printWin || !printWin.document) {
+    // Fallback:用當前頁面的列印(只列印 paper 區)
+    return printInPlace();
+  }
+
+  try {
+    const canvas = await captureCanvas();
+    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+    printWin.document.write(`
+      <!DOCTYPE html>
+      <html><head><title>列印 - ${escHtml(state.theme || '課程表')}</title>
+      <style>
+        @page { size: A4 portrait; margin: 8mm; }
+        body { margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        img { max-width: 100%; max-height: 100vh; object-fit: contain; display: block; }
+        @media print {
+          body { min-height: auto; }
+          img { width: 100%; height: auto; max-height: none; }
+        }
+      </style></head>
+      <body><img src="${imgData}" onload="window.print(); setTimeout(()=>window.close(), 100);"></body>
+      </html>`);
+    printWin.document.close();
+    addToHistory();
+  } catch (err) {
+    console.error(err);
+    if (printWin) try { printWin.close(); } catch(e) {}
+    return printInPlace();
+  }
+}
+
+// Fallback:在當前頁列印(只印 paper)
+function printInPlace() {
+  // 在 head 插入一個臨時 style,讓列印時只顯示 paper
+  const style = document.createElement('style');
+  style.id = 'print-only-paper';
+  style.textContent = `
+    @media print {
+      @page { size: A4 portrait; margin: 8mm; }
+      body * { visibility: hidden !important; }
+      #paper, #paper * { visibility: visible !important; }
+      #paper {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 210mm !important;
+        min-height: 297mm !important;
+        box-shadow: none !important;
+        transform: none !important;
+      }
+      #preview-container {
+        transform: none !important;
+        margin: 0 !important;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+  setTimeout(() => {
+    window.print();
+    setTimeout(() => style.remove(), 1000);
+  }, 100);
+  addToHistory();
+}
+
+// =============================================================
+// 啟動
+// =============================================================
+setupListeners();
+
+// ESC 關閉 modal、點 overlay 關閉
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.show').forEach(m => m.classList.remove('show'));
+  }
+});
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.classList.remove('show');
+  });
+});
+
+// 嘗試從 localStorage 還原上次內容,沒有就載入預設範例
+const restored = loadFromStorage();
+if (restored) {
+  // 把 state 資料寫回 form
+  document.getElementById('school').value = state.school || '';
+  document.getElementById('className').value = state.className || '';
+  document.getElementById('schoolYear').value = state.schoolYear || '';
+  document.getElementById('semester').value = state.semester || '';
+  document.getElementById('theme').value = state.theme || '';
+  // 課程欄位需要重設 id
+  state.courses = (state.courses || []).map(c => ({ ...c, id: ++courseIdSeq }));
+  // 確保前兩格永遠是固定欄位
+  normalizeCourses();
+  // 切換日期模式
+  document.querySelectorAll('#dateModeTabs button').forEach(b => b.classList.toggle('active', b.dataset.mode === state.dateMode));
+  // 切換字型
+  document.querySelectorAll('#fontPicker .font-card').forEach(c => c.classList.toggle('active', c.dataset.theme === state.fontTheme));
+  // 還原英文顯示開關
+  document.getElementById('showEnToggle').checked = state.showEn !== false;
+  // 還原學年度顯示開關
+  document.getElementById('showAcademicToggle').checked = state.showAcademic !== false;
+  // 還原版面配置
+  document.querySelectorAll('#layoutTabs button').forEach(b => b.classList.toggle('active', b.dataset.mode === (state.layoutMode || 'auto')));
+  // 還原 logo
+  updateLogoPreview();
+  renderDateFields();
+  renderCourseList();
+  applyFontTheme();
+  render();
+  installPaperDragListeners();
+  installEditDragListeners();
+  // 友善提示
+  setTimeout(() => showToast('已自動載入上次內容,記得改本週日期 ✨'), 300);
+} else {
+  renderDateFields();
+  applyFontTheme();
+  loadSample('default');
+  installPaperDragListeners();
+  installEditDragListeners();
+}
+
+// 預設顯示編輯頁
+switchView('edit');
+
+// 手機自動縮放
+setTimeout(autoFitZoom, 100);
+
+// 手機提示條(只在 768px 以下顯示,localStorage 記住是否關閉過)
+function dismissMobileHint() {
+  document.getElementById('mobileHint').classList.remove('show');
+  try { localStorage.setItem('mobile_hint_dismissed', '1'); } catch(e) {}
+}
+(function checkMobileHint() {
+  if (window.matchMedia('(max-width: 768px)').matches) {
+    try {
+      if (localStorage.getItem('mobile_hint_dismissed') !== '1') {
+        document.getElementById('mobileHint').classList.add('show');
+      }
+    } catch(e) {
+      document.getElementById('mobileHint').classList.add('show');
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
